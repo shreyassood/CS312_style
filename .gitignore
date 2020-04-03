@@ -1,3 +1,7 @@
+# IntelliJ Files
+cs312.iml
+.idea/
+
 # Maven build target
 target/
 
