@@ -15,8 +15,13 @@ public class StyleCheckerApplication {
 	}
 
 	@RequestMapping("/")
-	@ResponseBody
 	String home() {
+		return "/index.html";
+	}
+
+	@RequestMapping("/hello_world")
+	@ResponseBody
+	String helloWorld() {
 		return "Hello World!";
 	}
 

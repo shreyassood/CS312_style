@@ -20,7 +20,7 @@ export default class HelloWorld extends React.Component<Props, State> {
 
     componentDidMount() {
         this.setState({ isFetching: true })
-        fetch("/")
+        fetch("/hello_world")
             .then(response => response.text())
             .then(text => this.setState({ text: text, isFetching: false }))
     }
