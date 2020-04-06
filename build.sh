@@ -1,8 +1,5 @@
 #!/bin/bash
 
-set -euo pipefail
-current=$(dirname $(realpath ${BASH_SOURCE[0]}))
-
 run () {
     (cd web && npm run build)
     rm -rf ./src/main/resources/static
@@ -10,4 +7,4 @@ run () {
     mvn package
 }
 
-(cd "${current}" && run)
+run
