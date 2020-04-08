@@ -7,5 +7,10 @@ export default function App() {
       <header className="App-header">
         <HelloWorld />
       </header>
+
+        <form method="POST" action="/upload" encType="multipart/form-data">
+            <input type="file" name="file"/><br/>
+            <input type="submit" value="Submit"/>
+        </form>
     </div>);
 }
