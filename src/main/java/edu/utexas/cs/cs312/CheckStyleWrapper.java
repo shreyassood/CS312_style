@@ -3,6 +3,7 @@ package edu.utexas.cs.cs312;
 import com.puppycrawl.tools.checkstyle.*;
 import com.puppycrawl.tools.checkstyle.api.*;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
+import org.springframework.web.util.HtmlUtils;
 import picocli.CommandLine;
 
 import java.io.*;
@@ -15,7 +16,27 @@ import java.util.stream.Collectors;
 // From CheckStyle Source (Main)
 public class CheckStyleWrapper {
 
-    public static int runCheckStyle(Path outputPath, List<File> filesToProcess) throws IOException, CheckstyleException {
+    public static ArrayList<String> runCheckStyle(File inputFile) throws IOException, CheckstyleException {
+        File outputFile = File.createTempFile("output-temp", ".xml");
+
+        int resultCode = runCheckStyle(
+                outputFile.toPath(),
+                Collections.singletonList(inputFile)
+        );
+
+        // TODO Parse XML Result
+        ArrayList<String> resultStrings = new ArrayList<>();
+        resultStrings.add("Result code: " + resultCode + "<br/>");
+        Scanner scanner = new Scanner(outputFile);
+        while(scanner.hasNextLine()) {
+            resultStrings.add(HtmlUtils.htmlEscape(scanner.nextLine()));
+            resultStrings.add("<br/>");
+        }
+
+        return resultStrings;
+    }
+
+    private static int runCheckStyle(Path outputPath, List<File> filesToProcess) throws IOException, CheckstyleException {
         CliOptions options = new CliOptions();
         options.configurationFile = "/google_checks.xml";
         options.format = OutputFormat.XML;
