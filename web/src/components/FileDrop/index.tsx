@@ -69,7 +69,7 @@ export default function FileDrop() {
     return (
         <section className="container">
             <div {...getRootProps({style})}>
-                <input {...getInputProps()} type="file" name="file" />
+                <input {...getInputProps()} type="file" name="file"/>
                 <p>Drag 'n' drop some files here, or click to select files</p>
             </div>
             <aside>

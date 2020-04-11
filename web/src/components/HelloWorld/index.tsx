@@ -1,7 +1,6 @@
 import React from 'react';
 
-type Props = {
-}
+type Props = {}
 
 type State = {
     isFetching: boolean
@@ -19,10 +18,10 @@ export default class HelloWorld extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        this.setState({ isFetching: true })
+        this.setState({isFetching: true})
         fetch("/hello_world")
             .then(response => response.text())
-            .then(text => this.setState({ text: text, isFetching: false }))
+            .then(text => this.setState({text: text, isFetching: false}))
     }
 
     render() {
