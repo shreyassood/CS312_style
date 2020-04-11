@@ -9,10 +9,7 @@ export default function App() {
         <HelloWorld />
       </header>
 
-        <form method="POST" action="/upload" encType="multipart/form-data">
-            <FileDrop />
-            <input type="submit" value="Submit"/>
-        </form>
+        <FileDrop />
 
 
     </div>);
