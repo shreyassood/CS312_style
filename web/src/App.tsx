@@ -1,5 +1,6 @@
 import React from 'react';
 import HelloWorld from './components/HelloWorld'
+import FileDrop from './components/FileDrop'
 
 export default function App() {
   return (
@@ -9,8 +10,10 @@ export default function App() {
       </header>
 
         <form method="POST" action="/upload" encType="multipart/form-data">
-            <input type="file" name="file"/><br/>
+            <FileDrop />
             <input type="submit" value="Submit"/>
         </form>
+
+
     </div>);
 }
