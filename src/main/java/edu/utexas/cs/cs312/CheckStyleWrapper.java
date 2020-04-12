@@ -58,12 +58,7 @@ public class CheckStyleWrapper {
         // setup the properties
         final Properties props;
 
-//        if (options.propertiesFile == null) {
         props = System.getProperties();
-//        }
-//        else {
-//            props = loadProperties(options.propertiesFile);
-//        }
 
         // create a configuration
         final ThreadModeSettings multiThreadModeSettings =
@@ -88,24 +83,7 @@ public class CheckStyleWrapper {
 
         try {
             final AuditListener listener;
-//            if (options.generateXpathSuppressionsFile) {
-//                // create filter to print generated xpath suppressions file
-//                final Configuration treeWalkerConfig = getTreeWalkerConfig(config);
-//                if (treeWalkerConfig != null) {
-//                    final DefaultConfiguration moduleConfig =
-//                            new DefaultConfiguration(
-//                                    XpathFileGeneratorAstFilter.class.getName());
-//                    moduleConfig.addAttribute(Main.CliOptions.ATTRIB_TAB_WIDTH_NAME,
-//                            String.valueOf(options.tabWidth));
-//                    ((DefaultConfiguration) treeWalkerConfig).addChild(moduleConfig);
-//                }
-//
-//                listener = new XpathFileGeneratorAuditListener(getOutputStream(options.outputPath),
-//                        getOutputStreamOptions(options.outputPath));
-//            }
-//            else {
             listener = createListener(options.format, options.outputPath);
-//            }
 
             rootModule.setModuleClassLoader(moduleClassLoader);
             rootModule.configure(config);
