@@ -28,7 +28,7 @@ public class CheckStyleWrapper {
         ArrayList<String> resultStrings = new ArrayList<>();
         resultStrings.add("Result code: " + resultCode + "<br/>");
         Scanner scanner = new Scanner(outputFile);
-        while(scanner.hasNextLine()) {
+        while (scanner.hasNextLine()) {
             resultStrings.add(HtmlUtils.htmlEscape(scanner.nextLine()));
             resultStrings.add("<br/>");
         }
@@ -46,13 +46,12 @@ public class CheckStyleWrapper {
 
     /**
      * Executes required Checkstyle actions based on passed parameters.
-     * @param options user-specified options
+     *
+     * @param options        user-specified options
      * @param filesToProcess the list of files whose style to check
      * @return number of violations of ERROR level
-     * @throws IOException
-     *         when output file could not be found
-     * @throws CheckstyleException
-     *         when properties file could not be loaded
+     * @throws IOException         when output file could not be found
+     * @throws CheckstyleException when properties file could not be loaded
      */
     private static int runCheckstyle(CliOptions options, List<File> filesToProcess)
             throws CheckstyleException, IOException {
@@ -60,7 +59,7 @@ public class CheckStyleWrapper {
         final Properties props;
 
 //        if (options.propertiesFile == null) {
-            props = System.getProperties();
+        props = System.getProperties();
 //        }
 //        else {
 //            props = loadProperties(options.propertiesFile);
@@ -74,8 +73,7 @@ public class CheckStyleWrapper {
         final ConfigurationLoader.IgnoredModulesOptions ignoredModulesOptions;
         if (options.executeIgnoredModules) {
             ignoredModulesOptions = ConfigurationLoader.IgnoredModulesOptions.EXECUTE;
-        }
-        else {
+        } else {
             ignoredModulesOptions = ConfigurationLoader.IgnoredModulesOptions.OMIT;
         }
 
@@ -106,7 +104,7 @@ public class CheckStyleWrapper {
 //                        getOutputStreamOptions(options.outputPath));
 //            }
 //            else {
-                listener = createListener(options.format, options.outputPath);
+            listener = createListener(options.format, options.outputPath);
 //            }
 
             rootModule.setModuleClassLoader(moduleClassLoader);
@@ -115,8 +113,7 @@ public class CheckStyleWrapper {
 
             // run RootModule
             errorCounter = rootModule.process(filesToProcess);
-        }
-        finally {
+        } finally {
             rootModule.destroy();
         }
 
@@ -130,14 +127,19 @@ public class CheckStyleWrapper {
      */
     // Package-visible for tests.
     enum OutputFormat {
-        /** XML output format. */
+        /**
+         * XML output format.
+         */
         XML,
-        /** Plain output format. */
+        /**
+         * Plain output format.
+         */
         PLAIN;
 
         /**
          * Returns a new AuditListener for this OutputFormat.
-         * @param out the output stream
+         *
+         * @param out     the output stream
          * @param options the output stream options
          * @return a new AuditListener for this OutputFormat
          */
@@ -146,8 +148,7 @@ public class CheckStyleWrapper {
             final AuditListener result;
             if (this == XML) {
                 result = new XMLLogger(out, options);
-            }
-            else {
+            } else {
                 result = new DefaultLogger(out, options);
             }
             return result;
@@ -168,10 +169,11 @@ public class CheckStyleWrapper {
      * This method creates in AuditListener an open stream for validation data, it must be
      * closed by {@link RootModule} (default implementation is {@link Checker}) by calling
      * {@link AuditListener#auditFinished(AuditEvent)}.
-     * @param format format of the audit listener
+     *
+     * @param format         format of the audit listener
      * @param outputLocation the location of output
      * @return a fresh new {@code AuditListener}
-     * @exception IOException when provided output location is not found
+     * @throws IOException when provided output location is not found
      */
     private static AuditListener createListener(OutputFormat format, Path outputLocation)
             throws IOException {
@@ -183,6 +185,7 @@ public class CheckStyleWrapper {
 
     /**
      * Create output stream or return System.out
+     *
      * @param outputPath output location
      * @return output stream
      * @throws IOException might happen
@@ -193,8 +196,7 @@ public class CheckStyleWrapper {
         final OutputStream result;
         if (outputPath == null) {
             result = System.out;
-        }
-        else {
+        } else {
             result = Files.newOutputStream(outputPath);
         }
         return result;
@@ -202,6 +204,7 @@ public class CheckStyleWrapper {
 
     /**
      * Create {@link AutomaticBean.OutputStreamOptions} for the given location.
+     *
      * @param outputPath output location
      * @return output stream options
      */
@@ -209,8 +212,7 @@ public class CheckStyleWrapper {
         final AutomaticBean.OutputStreamOptions result;
         if (outputPath == null) {
             result = AutomaticBean.OutputStreamOptions.NONE;
-        }
-        else {
+        } else {
             result = AutomaticBean.OutputStreamOptions.CLOSE;
         }
         return result;
@@ -219,8 +221,9 @@ public class CheckStyleWrapper {
     /**
      * Creates a new instance of the root module that will control and run
      * Checkstyle.
-     * @param name The name of the module. This will either be a short name that
-     *        will have to be found or the complete package name.
+     *
+     * @param name              The name of the module. This will either be a short name that
+     *                          will have to be found or the complete package name.
      * @param moduleClassLoader Class loader used to load the root module.
      * @return The new instance of the root module.
      * @throws CheckstyleException if no module can be instantiated from name
@@ -235,8 +238,9 @@ public class CheckStyleWrapper {
 
     /**
      * Command line options.
+     *
      * @noinspection unused, FieldMayBeFinal, CanBeFinal,
-     *              MismatchedQueryAndUpdateOfCollection, LocalCanBeFinal
+     * MismatchedQueryAndUpdateOfCollection, LocalCanBeFinal
      */
     @CommandLine.Command(name = "checkstyle", description = "Checkstyle verifies that the specified "
             + "source code files adhere to the specified rules. By default violations are "
@@ -245,38 +249,58 @@ public class CheckStyleWrapper {
             mixinStandardHelpOptions = true)
     private static class CliOptions {
 
-        /** Width of CLI help option. */
+        /**
+         * Width of CLI help option.
+         */
         private static final int HELP_WIDTH = 100;
 
-        /** The default number of threads to use for checker and the tree walker. */
+        /**
+         * The default number of threads to use for checker and the tree walker.
+         */
         private static final int DEFAULT_THREAD_COUNT = 1;
 
-        /** Name for the moduleConfig attribute 'tabWidth'. */
+        /**
+         * Name for the moduleConfig attribute 'tabWidth'.
+         */
         private static final String ATTRIB_TAB_WIDTH_NAME = "tabWidth";
 
-        /** Default output format. */
+        /**
+         * Default output format.
+         */
         private static final OutputFormat DEFAULT_OUTPUT_FORMAT = OutputFormat.PLAIN;
 
-        /** Option name for output format. */
+        /**
+         * Option name for output format.
+         */
         private static final String OUTPUT_FORMAT_OPTION = "-f";
 
-        /** List of file to validate. */
+        /**
+         * List of file to validate.
+         */
         @CommandLine.Parameters(arity = "1..*", description = "One or more source files to verify")
         private List<File> files;
 
-        /** Config file location. */
+        /**
+         * Config file location.
+         */
         @CommandLine.Option(names = "-c", description = "Sets the check configuration file to use.")
         private String configurationFile;
 
-        /** Output file location. */
+        /**
+         * Output file location.
+         */
         @CommandLine.Option(names = "-o", description = "Sets the output file. Defaults to stdout")
         private Path outputPath;
 
-        /** Properties file location. */
+        /**
+         * Properties file location.
+         */
         @CommandLine.Option(names = "-p", description = "Loads the properties file")
         private File propertiesFile;
 
-        /** LineNo and columnNo for the suppression. */
+        /**
+         * LineNo and columnNo for the suppression.
+         */
         @CommandLine.Option(names = "-s",
                 description = "Print xpath suppressions at the file's line and column position. "
                         + "Argument is the line and column number (separated by a : ) in the file "
@@ -293,7 +317,9 @@ public class CheckStyleWrapper {
                 + "Used only with \"-s\" option. Default value is ${DEFAULT-VALUE}")
         private int tabWidth = CommonUtil.DEFAULT_TAB_WIDTH;
 
-        /** Switch whether to generate suppressions file or not. */
+        /**
+         * Switch whether to generate suppressions file or not.
+         */
         @CommandLine.Option(names = {"-g", "--generate-xpath-suppression"},
                 description = "Generates to output a suppression xml to use to suppress all"
                         + " violations from user's config")
@@ -309,27 +335,37 @@ public class CheckStyleWrapper {
                 + "${COMPLETION-CANDIDATES}. Defaults to ${DEFAULT-VALUE}")
         private OutputFormat format = DEFAULT_OUTPUT_FORMAT;
 
-        /** Option that controls whether to print the AST of the file. */
+        /**
+         * Option that controls whether to print the AST of the file.
+         */
         @CommandLine.Option(names = {"-t", "--tree"},
                 description = "Print Abstract Syntax Tree(AST) of the file")
         private boolean printAst;
 
-        /** Option that controls whether to print the AST of the file including comments. */
+        /**
+         * Option that controls whether to print the AST of the file including comments.
+         */
         @CommandLine.Option(names = {"-T", "--treeWithComments"},
                 description = "Print Abstract Syntax Tree(AST) of the file including comments")
         private boolean printAstWithComments;
 
-        /** Option that controls whether to print the parse tree of the javadoc comment. */
+        /**
+         * Option that controls whether to print the parse tree of the javadoc comment.
+         */
         @CommandLine.Option(names = {"-j", "--javadocTree"},
                 description = "Print Parse tree of the Javadoc comment")
         private boolean printJavadocTree;
 
-        /** Option that controls whether to print the full AST of the file. */
+        /**
+         * Option that controls whether to print the full AST of the file.
+         */
         @CommandLine.Option(names = {"-J", "--treeWithJavadoc"},
                 description = "Print full Abstract Syntax Tree of the file")
         private boolean printTreeWithJavadoc;
 
-        /** Option that controls whether to print debug info. */
+        /**
+         * Option that controls whether to print debug info.
+         */
         @CommandLine.Option(names = {"-d", "--debug"},
                 description = "Print all debug logging of CheckStyle utility")
         private boolean debug;
@@ -354,7 +390,9 @@ public class CheckStyleWrapper {
                 description = "Regular expression of directory/file to exclude from CheckStyle")
         private List<Pattern> excludeRegex = new ArrayList<>();
 
-        /** Switch whether to execute ignored modules or not. */
+        /**
+         * Switch whether to execute ignored modules or not.
+         */
         @CommandLine.Option(names = {"-E", "--executeIgnoredModules"},
                 description = "Allows ignored modules to be run.")
         private boolean executeIgnoredModules;
@@ -379,13 +417,16 @@ public class CheckStyleWrapper {
                 + "number of TreeWalker threads (must be greater than zero)")
         private int treeWalkerThreadsNumber = DEFAULT_THREAD_COUNT;
 
-        /** Show AST branches that match xpath. */
+        /**
+         * Show AST branches that match xpath.
+         */
         @CommandLine.Option(names = {"-b", "--branch-matching-xpath"},
                 description = "Show Abstract Syntax Tree(AST) branches that match XPath")
         private String xpath;
 
         /**
          * Gets the list of exclusions provided through the command line arguments.
+         *
          * @return List of exclusion patterns.
          */
         private List<Pattern> getExclusions() {
@@ -401,7 +442,8 @@ public class CheckStyleWrapper {
 
         /**
          * Validates the user-specified command line options.
-         * @param parseResult used to verify if the format option was specified on the command line
+         *
+         * @param parseResult    used to verify if the format option was specified on the command line
          * @param filesToProcess the list of files whose style to check
          * @return list of violations
          */
@@ -421,33 +463,27 @@ public class CheckStyleWrapper {
                         || propertiesFile != null || outputPath != null
                         || parseResult.hasMatchedOption(OUTPUT_FORMAT_OPTION)) {
                     result.add("Option '-t' cannot be used with other options.");
-                }
-                else if (filesToProcess.size() > 1) {
+                } else if (filesToProcess.size() > 1) {
                     result.add("Printing AST is allowed for only one file.");
                 }
-            }
-            else if (hasSuppressionLineColumnNumber) {
+            } else if (hasSuppressionLineColumnNumber) {
                 if (configurationFile != null || propertiesFile != null
                         || outputPath != null
                         || parseResult.hasMatchedOption(OUTPUT_FORMAT_OPTION)) {
                     result.add("Option '-s' cannot be used with other options.");
-                }
-                else if (filesToProcess.size() > 1) {
+                } else if (filesToProcess.size() > 1) {
                     result.add("Printing xpath suppressions is allowed for only one file.");
                 }
-            }
-            else if (hasConfigurationFile) {
+            } else if (hasConfigurationFile) {
                 try {
                     // test location only
                     CommonUtil.getUriByFilename(configurationFile);
-                }
-                catch (CheckstyleException ignored) {
+                } catch (CheckstyleException ignored) {
                     final String msg = "Could not find config XML file '%s'.";
                     result.add(String.format(Locale.ROOT, msg, configurationFile));
                 }
                 result.addAll(validateOptionalCliParametersIfConfigDefined());
-            }
-            else {
+            } else {
                 result.add("Must specify a config XML file.");
             }
 
@@ -456,6 +492,7 @@ public class CheckStyleWrapper {
 
         /**
          * Validates optional command line parameters that might be used with config file.
+         *
          * @return list of violations
          */
         private List<String> validateOptionalCliParametersIfConfigDefined() {

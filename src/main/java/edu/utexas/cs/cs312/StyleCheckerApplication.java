@@ -21,42 +21,42 @@ import static edu.utexas.cs.cs312.CheckStyleWrapper.runCheckStyle;
 @SpringBootApplication
 public class StyleCheckerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(StyleCheckerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(StyleCheckerApplication.class, args);
+    }
 
-	@RequestMapping("/")
-	String home() {
-		return "/index.html";
-	}
+    @RequestMapping("/")
+    String home() {
+        return "/index.html";
+    }
 
-	@RequestMapping("/hello_world")
-	@ResponseBody
-	String helloWorld() {
-		return "Hello, World!";
-	}
+    @RequestMapping("/hello_world")
+    @ResponseBody
+    String helloWorld() {
+        return "Hello, World!";
+    }
 
-	@PostMapping("/upload")
-	@ResponseBody
-	public String singleFileUpload(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/upload")
+    @ResponseBody
+    public String singleFileUpload(@RequestParam("file") MultipartFile file) {
 
-		if (file.isEmpty()) {
-			return "no file";
-		}
+        if (file.isEmpty()) {
+            return "no file";
+        }
 
-		try {
-			Path tempDir = Files.createTempDirectory("temp_dir");
-			Path sourceFilePath = tempDir.resolve(file.getOriginalFilename());
-			Files.write(sourceFilePath, file.getBytes());
+        try {
+            Path tempDir = Files.createTempDirectory("temp_dir");
+            Path sourceFilePath = tempDir.resolve(file.getOriginalFilename());
+            Files.write(sourceFilePath, file.getBytes());
 
-			File sourceFile = sourceFilePath.toFile();
-			ArrayList<String> result = runCheckStyle(sourceFile);
+            File sourceFile = sourceFilePath.toFile();
+            ArrayList<String> result = runCheckStyle(sourceFile);
 
-			return Strings.join(result, '\n');
-		} catch (Exception e) {
-			return String.format("Error uploading: %s", e.getMessage());
-		}
+            return Strings.join(result, '\n');
+        } catch (Exception e) {
+            return String.format("Error uploading: %s", e.getMessage());
+        }
 
-	}
+    }
 
 }
