@@ -44,8 +44,8 @@ export default function FileDrop() {
                 // }),
                 body: formData
             })
-                .then(response => response.text())
-                .then(data => alert(data))
+                .then(response => response.json())
+                .then(data => alert(JSON.stringify(data)))
         }
     });
 

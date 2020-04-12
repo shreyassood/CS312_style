@@ -3,6 +3,7 @@ package edu.utexas.cs.cs312;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,8 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
 
 import static edu.utexas.cs.cs312.CheckStyleWrapper.runCheckStyle;
 
@@ -36,12 +39,16 @@ public class StyleCheckerApplication {
         return "Hello, World!";
     }
 
-    @PostMapping("/upload")
+    @PostMapping(value = "/upload", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String singleFileUpload(@RequestParam("file") MultipartFile file) {
+    Map singleFileUpload(@RequestParam("file") MultipartFile file) {
 
-        if (file.isEmpty()) {
-            return "no file";
+        if (file.isEmpty()
+                || file.getOriginalFilename() == null
+                || !file.getOriginalFilename().endsWith(".java")) {
+            return Collections.singletonMap(
+                    "error", "Please submit a valid java file"
+            );
         }
 
         try {
@@ -52,9 +59,14 @@ public class StyleCheckerApplication {
             File sourceFile = sourceFilePath.toFile();
             ArrayList<String> result = runCheckStyle(sourceFile);
 
-            return Strings.join(result, '\n');
+            return Collections.singletonMap(
+                    "result", Strings.join(result, '\n')
+            );
         } catch (Exception e) {
-            return String.format("Error uploading: %s", e.getMessage());
+            e.printStackTrace();
+            return Collections.singletonMap(
+                    "error", "Unknown error occurred: please make sure your file compiles."
+            );
         }
 
     }
