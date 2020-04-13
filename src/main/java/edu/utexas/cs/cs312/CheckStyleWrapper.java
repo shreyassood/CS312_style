@@ -3,10 +3,11 @@ package edu.utexas.cs.cs312;
 import com.puppycrawl.tools.checkstyle.*;
 import com.puppycrawl.tools.checkstyle.api.*;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
-import org.springframework.web.util.HtmlUtils;
 import picocli.CommandLine;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -16,44 +17,83 @@ import java.util.stream.Collectors;
 // From CheckStyle Source (Main)
 public class CheckStyleWrapper {
 
-    public static ArrayList<String> runCheckStyle(File inputFile) throws IOException, CheckstyleException {
-        File outputFile = File.createTempFile("output-temp", ".xml");
+    public static CheckStyleResult runCheckStyle(File inputFile)
+            throws IOException, CheckstyleException {
+
+        // TODO support multiple files through listener
+        CustomJavaListener listener = new CustomJavaListener();
 
         int resultCode = runCheckStyle(
-                outputFile.toPath(),
+                listener,
                 Collections.singletonList(inputFile)
         );
 
-        // TODO Parse XML Result
-        ArrayList<String> resultStrings = new ArrayList<>();
-        resultStrings.add("Result code: " + resultCode + "<br/>");
-        Scanner scanner = new Scanner(outputFile);
-        while (scanner.hasNextLine()) {
-            resultStrings.add(HtmlUtils.htmlEscape(scanner.nextLine()));
-            resultStrings.add("<br/>");
-        }
-
-        return resultStrings;
+        return new CheckStyleResult(
+                resultCode, listener.getErrors()
+        );
     }
 
-    private static int runCheckStyle(Path outputPath, List<File> filesToProcess) throws IOException, CheckstyleException {
+    private static class CustomJavaListener implements AuditListener {
+
+        private ArrayList<CheckStyleResult.CheckStyleError> errors;
+
+        public CustomJavaListener() {
+            this.errors = new ArrayList<>();
+        }
+
+        public ArrayList<CheckStyleResult.CheckStyleError> getErrors() {
+            return errors;
+        }
+
+        @Override
+        public void auditStarted(AuditEvent auditEvent) {
+        }
+
+        @Override
+        public void auditFinished(AuditEvent auditEvent) {
+        }
+
+        @Override
+        public void fileStarted(AuditEvent auditEvent) {
+        }
+
+        @Override
+        public void fileFinished(AuditEvent auditEvent) {
+        }
+
+        @Override
+        public void addError(AuditEvent auditEvent) {
+            errors.add(new CheckStyleResult.CheckStyleError(
+                    auditEvent.getLine(),
+                    auditEvent.getColumn(),
+                    auditEvent.getMessage()
+            ));
+        }
+
+        @Override
+        public void addException(AuditEvent auditEvent, Throwable throwable) {
+        }
+    }
+
+    private static int runCheckStyle(AuditListener listener, List<File> filesToProcess) throws IOException, CheckstyleException {
         CliOptions options = new CliOptions();
         options.configurationFile = "/google_checks.xml";
-        options.format = OutputFormat.XML;
-        options.outputPath = outputPath;
-        return runCheckstyle(options, filesToProcess);
+        return runCheckstyle(options, listener, filesToProcess);
     }
 
     /**
      * Executes required Checkstyle actions based on passed parameters.
      *
      * @param options        user-specified options
+     * @param listener       listener to fire errors and exceptions to
      * @param filesToProcess the list of files whose style to check
      * @return number of violations of ERROR level
      * @throws IOException         when output file could not be found
      * @throws CheckstyleException when properties file could not be loaded
      */
-    private static int runCheckstyle(CliOptions options, List<File> filesToProcess)
+    private static int runCheckstyle(CliOptions options,
+                                     AuditListener listener,
+                                     List<File> filesToProcess)
             throws CheckstyleException, IOException {
         // setup the properties
         final Properties props;
@@ -82,8 +122,9 @@ public class CheckStyleWrapper {
         final RootModule rootModule = getRootModule(config.getName(), moduleClassLoader);
 
         try {
-            final AuditListener listener;
-            listener = createListener(options.format, options.outputPath);
+
+            // default listener for text / XML ouput
+            // listener = createListener(options.format, options.outputPath);
 
             rootModule.setModuleClassLoader(moduleClassLoader);
             rootModule.configure(config);

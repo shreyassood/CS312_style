@@ -1,6 +1,6 @@
 package edu.utexas.cs.cs312;
 
-import org.apache.logging.log4j.util.Strings;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.MediaType;
@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
@@ -57,16 +56,22 @@ public class StyleCheckerApplication {
             Files.write(sourceFilePath, file.getBytes());
 
             File sourceFile = sourceFilePath.toFile();
-            ArrayList<String> result = runCheckStyle(sourceFile);
+            CheckStyleResult result = runCheckStyle(sourceFile);
+
+            ObjectMapper mapper = new ObjectMapper();
+            String resultString = mapper.writeValueAsString(result);
 
             return Collections.singletonMap(
-                    "result", Strings.join(result, '\n')
+                    "result", resultString
             );
+
         } catch (Exception e) {
+
             e.printStackTrace();
             return Collections.singletonMap(
                     "error", "Unknown error occurred: please make sure your file compiles."
             );
+
         }
 
     }
