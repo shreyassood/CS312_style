@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {useDropzone} from 'react-dropzone';
+import {DropEvent, useDropzone} from 'react-dropzone';
 
 const baseStyle = {
     flex: 1,
@@ -25,7 +25,11 @@ const rejectStyle = {
     borderColor: '#ff1744'
 };
 
-export default function FileDrop() {
+type Props = {
+    acceptFileCallback?<T extends File>(files: T[], event: DropEvent): void;
+}
+
+export default function FileDrop(props: Props) {
     const {
         acceptedFiles,
         getRootProps,
@@ -33,20 +37,7 @@ export default function FileDrop() {
         isDragActive,
         isDragReject,
     } = useDropzone({
-        onDropAccepted: files => {
-            const formData = new FormData();
-            formData.append('file', files[0]);
-
-            fetch('/upload', {
-                method: 'POST',
-                // headers: new Headers({
-                //     'Content-Type': 'multipart/form-data',
-                // }),
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => alert(JSON.stringify(data)))
-        }
+        onDropAccepted: props.acceptFileCallback
     });
 
     const style = useMemo(() => ({

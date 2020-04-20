@@ -6,6 +6,7 @@ type Props = {}
 
 type State = {
     uploadedDocument: boolean
+    fileResults: string | null
 }
 
 export default class App extends React.Component<Props, State> {
@@ -14,7 +15,28 @@ export default class App extends React.Component<Props, State> {
         super(props);
         this.state = {
             uploadedDocument: false,
+            fileResults: null
         }
+    }
+
+    acceptFileCallback<T extends File>(files: T[]){
+            const formData = new FormData();
+            formData.append('file', files[0]);
+
+            fetch('/upload', {
+                method: 'POST',
+                // headers: new Headers({
+                //     'Content-Type': 'multipart/form-data',
+                // }),
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    this.setState({
+                        fileResults: JSON.stringify(data),
+                        uploadedDocument: true
+                    });
+                })
     }
 
 
@@ -25,7 +47,15 @@ export default class App extends React.Component<Props, State> {
                     <HelloWorld/>
                 </header>
 
-                <FileDrop/>
+                {!this.state.uploadedDocument &&
+                <FileDrop acceptFileCallback={this.acceptFileCallback}/>
+                }
+
+                {this.state.uploadedDocument &&
+                <p>
+                    {this.state.fileResults}
+                </p>
+                }
 
             </div>
         );
