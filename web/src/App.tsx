@@ -16,7 +16,10 @@ export default class App extends React.Component<Props, State> {
         this.state = {
             uploadedDocument: false,
             fileResults: null
-        }
+        };
+
+        // bind to access setState in callback
+        this.acceptFileCallback = this.acceptFileCallback.bind(this)
     }
 
     acceptFileCallback<T extends File>(files: T[]){
