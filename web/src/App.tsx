@@ -2,6 +2,7 @@ import React from 'react';
 import FileDrop from './components/FileDrop'
 import StyleResult from "./components/StyleResult";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 type Props = {}
