@@ -1,6 +1,7 @@
 import React from 'react';
 import FileDrop from './components/FileDrop'
 import StyleResult from "./components/StyleResult";
+import Button from "react-bootstrap/Button";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -22,7 +23,8 @@ export default class App extends React.Component<Props, State> {
         };
 
         // bind to access setState in callback
-        this.acceptFileCallback = this.acceptFileCallback.bind(this)
+        this.acceptFileCallback = this.acceptFileCallback.bind(this);
+        this.uploadNewFile = this.uploadNewFile.bind(this);
     }
 
     acceptFileCallback<T extends File>(files: T[]) {
@@ -45,6 +47,12 @@ export default class App extends React.Component<Props, State> {
             })
     }
 
+    uploadNewFile() {
+        this.setState({
+            uploadedDocument: false,
+        });
+    }
+
 
     render() {
         return (
@@ -55,6 +63,12 @@ export default class App extends React.Component<Props, State> {
 
                 {!this.state.uploadedDocument &&
                 <FileDrop acceptFileCallback={this.acceptFileCallback}/>
+                }
+
+                {this.state.uploadedDocument &&
+                <Button size="lg" onClick={this.uploadNewFile}>
+                    Upload another file
+                </Button>
                 }
 
                 {this.state.uploadedDocument &&
