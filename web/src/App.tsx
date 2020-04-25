@@ -1,5 +1,4 @@
 import React from 'react';
-import HelloWorld from './components/HelloWorld'
 import FileDrop from './components/FileDrop'
 
 type Props = {}
@@ -47,7 +46,7 @@ export default class App extends React.Component<Props, State> {
         return (
             <div className="App">
                 <header className="App-header">
-                    <HelloWorld/>
+                    <h1>CS312 Style Checker</h1>
                 </header>
 
                 {!this.state.uploadedDocument &&
