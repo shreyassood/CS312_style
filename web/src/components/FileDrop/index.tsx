@@ -29,6 +29,7 @@ const rejectStyle = {
 
 type Props = {
     acceptFileCallback?<T extends File>(files: T[], event: DropEvent): void;
+    uploadingDocument: boolean;
 }
 
 export default function FileDrop(props: Props) {
@@ -53,24 +54,19 @@ export default function FileDrop(props: Props) {
 
 
     const files = acceptedFiles.map(file => (
-        <li key={file.name}>
-            {file.name} - {file.size} bytes
-        </li>
+        <span>{file.name}</span>
     ));
 
 
     return (
-        <div>
             <section className="container">
-                <div className="dropzone" {...getRootProps({style})}>
+                {!props.uploadingDocument && <div className="dropzone" {...getRootProps({style})}>
                     <input {...getInputProps()} type="file" name="file"/>
                     <p>Drag 'n' drop some files here, or click to select files</p>
-                </div>
+                </div>}
+                {props.uploadingDocument &&
+                <p>Loading result for {files} ... </p>
+                }
             </section>
-            <section>
-                <h4>Files</h4>
-                <ul>{files}</ul>
-            </section>
-        </div>
     );
 }

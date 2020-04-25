@@ -11,6 +11,7 @@ type Props = {}
 
 type State = {
     uploadedDocument: boolean
+    uploadingDocument: boolean
     fileResults: string | null
 }
 
@@ -20,6 +21,7 @@ export default class App extends React.Component<Props, State> {
         super(props);
         this.state = {
             uploadedDocument: false,
+            uploadingDocument: false,
             fileResults: null
         };
 
@@ -29,6 +31,11 @@ export default class App extends React.Component<Props, State> {
     }
 
     acceptFileCallback<T extends File>(files: T[]) {
+
+        this.setState({
+            uploadingDocument: true
+        });
+
         const formData = new FormData();
         formData.append('file', files[0]);
 
@@ -43,7 +50,8 @@ export default class App extends React.Component<Props, State> {
             .then(data => {
                 this.setState({
                     fileResults: JSON.stringify(data),
-                    uploadedDocument: true
+                    uploadedDocument: true,
+                    uploadingDocument: false,
                 });
             })
     }
@@ -51,6 +59,7 @@ export default class App extends React.Component<Props, State> {
     uploadNewFile() {
         this.setState({
             uploadedDocument: false,
+            uploadingDocument: false,
         });
     }
 
@@ -63,7 +72,10 @@ export default class App extends React.Component<Props, State> {
                 </Jumbotron>
 
                 {!this.state.uploadedDocument &&
-                <FileDrop acceptFileCallback={this.acceptFileCallback}/>
+                <FileDrop
+                    acceptFileCallback={this.acceptFileCallback}
+                    uploadingDocument={this.state.uploadingDocument}
+                />
                 }
 
                 {this.state.uploadedDocument &&
