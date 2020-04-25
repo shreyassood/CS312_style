@@ -1,6 +1,8 @@
 import React, {useMemo} from 'react';
 import {DropEvent, useDropzone} from 'react-dropzone';
 
+import './index.css';
+
 const baseStyle = {
     flex: 1,
     display: 'flex',
@@ -58,15 +60,17 @@ export default function FileDrop(props: Props) {
 
 
     return (
-        <section className="container">
-            <div {...getRootProps({style})}>
-                <input {...getInputProps()} type="file" name="file"/>
-                <p>Drag 'n' drop some files here, or click to select files</p>
-            </div>
-            <aside>
+        <div>
+            <section className="container">
+                <div className="dropzone" {...getRootProps({style})}>
+                    <input {...getInputProps()} type="file" name="file"/>
+                    <p>Drag 'n' drop some files here, or click to select files</p>
+                </div>
+            </section>
+            <section>
                 <h4>Files</h4>
                 <ul>{files}</ul>
-            </aside>
-        </section>
+            </section>
+        </div>
     );
 }
