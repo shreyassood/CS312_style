@@ -2,18 +2,12 @@ package edu.utexas.cs.cs312;
 
 import com.google.common.collect.ImmutableList;
 
-import java.util.Collections;
 import java.util.List;
 
 public class CheckStyleResult {
 
     public List<CheckStyleError> errors;
     public int resultCode;
-
-    public CheckStyleResult(int resultCode) {
-        this.resultCode = resultCode;
-        this.errors = Collections.emptyList();
-    }
 
     public CheckStyleResult(int resultCode, List<CheckStyleError> errors) {
         this.resultCode = resultCode;
