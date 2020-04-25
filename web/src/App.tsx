@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import Jumbotron from "react-bootstrap/Jumbotron";
 
 type Props = {}
 
@@ -57,9 +58,9 @@ export default class App extends React.Component<Props, State> {
     render() {
         return (
             <div className="App">
-                <header className="App-header">
+                <Jumbotron className="App-header" fluid>
                     <h1>CS312 Style Checker</h1>
-                </header>
+                </Jumbotron>
 
                 {!this.state.uploadedDocument &&
                 <FileDrop acceptFileCallback={this.acceptFileCallback}/>
