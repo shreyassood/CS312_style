@@ -2,6 +2,8 @@ import React from 'react';
 import FileDrop from './components/FileDrop'
 import StyleResult from "./components/StyleResult";
 
+import './App.css';
+
 type Props = {}
 
 type State = {
