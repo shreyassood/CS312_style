@@ -25,24 +25,24 @@ export default class App extends React.Component<Props, State> {
         this.acceptFileCallback = this.acceptFileCallback.bind(this)
     }
 
-    acceptFileCallback<T extends File>(files: T[]){
-            const formData = new FormData();
-            formData.append('file', files[0]);
+    acceptFileCallback<T extends File>(files: T[]) {
+        const formData = new FormData();
+        formData.append('file', files[0]);
 
-            fetch('/upload', {
-                method: 'POST',
-                // headers: new Headers({
-                //     'Content-Type': 'multipart/form-data',
-                // }),
-                body: formData
+        fetch('/upload', {
+            method: 'POST',
+            // headers: new Headers({
+            //     'Content-Type': 'multipart/form-data',
+            // }),
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    fileResults: JSON.stringify(data),
+                    uploadedDocument: true
+                });
             })
-                .then(response => response.json())
-                .then(data => {
-                    this.setState({
-                        fileResults: JSON.stringify(data),
-                        uploadedDocument: true
-                    });
-                })
     }
 
 
