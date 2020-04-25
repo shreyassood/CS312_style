@@ -1,5 +1,6 @@
 import React from 'react';
 import FileDrop from './components/FileDrop'
+import StyleResult from "./components/StyleResult";
 
 type Props = {}
 
@@ -54,9 +55,7 @@ export default class App extends React.Component<Props, State> {
                 }
 
                 {this.state.uploadedDocument &&
-                <p>
-                    {this.state.fileResults}
-                </p>
+                <StyleResult fileResults={this.state.fileResults}/>
                 }
 
             </div>
