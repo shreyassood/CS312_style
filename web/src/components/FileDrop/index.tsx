@@ -3,22 +3,6 @@ import {DropEvent, useDropzone} from 'react-dropzone';
 
 import './index.css';
 
-const baseStyle = {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '20px',
-    borderWidth: 2,
-    borderRadius: 2,
-    borderColor: '#eeeeee',
-    borderStyle: 'dashed',
-    backgroundColor: '#fafafa',
-    color: '#bdbdbd',
-    outline: 'none',
-    transition: 'border .24s ease-in-out'
-};
-
 const activeStyle = {
     borderColor: '#2196f3'
 };
@@ -44,7 +28,6 @@ export default function FileDrop(props: Props) {
     });
 
     const style = useMemo(() => ({
-        ...baseStyle,
         ...(isDragActive ? activeStyle : {}),
         ...(isDragReject ? rejectStyle : {})
     }), [
@@ -60,9 +43,10 @@ export default function FileDrop(props: Props) {
 
     return (
             <section className="container">
-                {!props.uploadingDocument && <div className="dropzone" {...getRootProps({style})}>
+                {!props.uploadingDocument &&
+                <div className="dropzone" {...getRootProps({style})}>
                     <input {...getInputProps()} type="file" name="file"/>
-                    <p>Drag 'n' drop some files here, or click to select files</p>
+                    <span>Drag 'n' drop some files here, or click to select files</span>
                 </div>}
                 {props.uploadingDocument &&
                 <p>Loading result for {files} ... </p>
