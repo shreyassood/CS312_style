@@ -1,11 +1,12 @@
 import React from 'react';
 import Alert from "react-bootstrap/Alert";
-import {PrismLight as SyntaxHighlighter} from 'react-syntax-highlighter';
-import java from 'react-syntax-highlighter/dist/esm/languages/prism/java';
-import tomorrow from 'react-syntax-highlighter/dist/esm/styles/prism/tomorrow';
+import {PrismLight as SyntaxHighlighter} from '../SyntaxHighlighter';
+import java from '../SyntaxHighlighter/languages/prism/java';
+import tomorrow from '../SyntaxHighlighter/styles/prism/tomorrow';
 
 import './index.css';
 
+// @ts-ignore
 SyntaxHighlighter.registerLanguage('java', java);
 
 type Props = {
@@ -92,6 +93,8 @@ export default function StyleResult(props: Props) {
                 language="java"
                 style={tomorrow}
                 wrapLines
+                renderer={null}
+                astGenerator={null}
                 lineProps={
                     (lineNumber: number) => {
                         if (errorLineNumbers.includes(lineNumber)) {
