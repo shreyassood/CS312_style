@@ -4,6 +4,8 @@ import {PrismLight as SyntaxHighlighter} from 'react-syntax-highlighter';
 import java from 'react-syntax-highlighter/dist/esm/languages/prism/java';
 import tomorrow from 'react-syntax-highlighter/dist/esm/styles/prism/tomorrow';
 
+import './index.css';
+
 SyntaxHighlighter.registerLanguage('java', java);
 
 type Props = {
@@ -22,8 +24,8 @@ export type CheckStyleResult = {
 }
 
 type CheckStyleError = {
-    lineNumber: bigint,
-    columnNumber: bigint,
+    lineNumber: number,
+    columnNumber: number,
     message: string
 }
 
@@ -65,6 +67,11 @@ export default function StyleResult(props: Props) {
         )
     }
 
+    let errorLineNumbers: number[] = [];
+    for (const error of props.fileResults.result.errors) {
+        errorLineNumbers.push(error.lineNumber);
+    }
+
     return (
         <div>
             {
@@ -84,6 +91,21 @@ export default function StyleResult(props: Props) {
             <SyntaxHighlighter
                 language="java"
                 style={tomorrow}
+                wrapLines
+                lineProps={
+                    (lineNumber: number) => {
+                        if (errorLineNumbers.includes(lineNumber)) {
+                            return {
+                                className: 'line-error',
+                            }
+                        } else {
+                            return {
+                                className: 'line-no-error',
+                            }
+                        }
+
+                    }
+                }
                 showLineNumbers
             >
                 {props.fileResults.result.sourceCode}

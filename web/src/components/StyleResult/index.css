@@ -1,0 +1,8 @@
+.line-error {
+    display: block;
+    background-color: #401303;
+}
+
+.line-no-error {
+    display: block;
+}
