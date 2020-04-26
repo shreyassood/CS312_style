@@ -77,7 +77,7 @@ public class CheckStyleWrapper {
 
     private static int runCheckStyle(AuditListener listener, List<File> filesToProcess) throws IOException, CheckstyleException {
         CliOptions options = new CliOptions();
-        options.configurationFile = "/google_checks.xml";
+        options.configurationFile = "/sun_checks.xml";
         return runCheckstyle(options, listener, filesToProcess);
     }
 
