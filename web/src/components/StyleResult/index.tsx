@@ -12,6 +12,7 @@ export type APIResult = {
 
 export type CheckStyleResult = {
     errors: CheckStyleError[],
+    sourceCode: string,
     resultCode: bigint,
 }
 
@@ -74,6 +75,10 @@ export default function StyleResult(props: Props) {
                     )}
                 </ul>
             }
+
+            <pre>
+                {props.fileResults.result.sourceCode}
+            </pre>
 
         </div>
     )

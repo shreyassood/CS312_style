@@ -7,10 +7,12 @@ import java.util.List;
 public class CheckStyleResult {
 
     public List<CheckStyleError> errors;
+    public String sourceCode;
     public int resultCode;
 
-    public CheckStyleResult(int resultCode, List<CheckStyleError> errors) {
+    public CheckStyleResult(int resultCode, String sourceCode, List<CheckStyleError> errors) {
         this.resultCode = resultCode;
+        this.sourceCode = sourceCode;
         this.errors = ImmutableList.copyOf(errors);
     }
 

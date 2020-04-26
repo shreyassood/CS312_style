@@ -28,8 +28,12 @@ public class CheckStyleWrapper {
                 Collections.singletonList(inputFile)
         );
 
+        String fileContent = new String(Files.readAllBytes(inputFile.toPath()));
+
         return new CheckStyleResult(
-                resultCode, listener.getErrors()
+                resultCode,
+                fileContent,
+                listener.getErrors()
         );
     }
 
