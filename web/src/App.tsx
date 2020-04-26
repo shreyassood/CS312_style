@@ -1,6 +1,6 @@
 import React from 'react';
 import FileDrop from './components/FileDrop'
-import StyleResult from "./components/StyleResult";
+import StyleResult, {APIResult} from "./components/StyleResult";
 import Button from "react-bootstrap/Button";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,8 +12,9 @@ type Props = {}
 type State = {
     uploadedDocument: boolean
     uploadingDocument: boolean
-    fileResults: string | null
+    fileResults: APIResult | null
 }
+
 
 export default class App extends React.Component<Props, State> {
 
@@ -49,7 +50,7 @@ export default class App extends React.Component<Props, State> {
             .then(response => response.json())
             .then(data => {
                 this.setState({
-                    fileResults: JSON.stringify(data),
+                    fileResults: data,
                     uploadedDocument: true,
                     uploadingDocument: false,
                 });

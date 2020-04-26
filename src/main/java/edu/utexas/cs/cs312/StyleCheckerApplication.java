@@ -58,11 +58,11 @@ public class StyleCheckerApplication {
             File sourceFile = sourceFilePath.toFile();
             CheckStyleResult result = runCheckStyle(sourceFile);
 
-            ObjectMapper mapper = new ObjectMapper();
-            String resultString = mapper.writeValueAsString(result);
+//            ObjectMapper mapper = new ObjectMapper();
+//            String resultString = mapper.writeValueAsString(result);
 
             return Collections.singletonMap(
-                    "result", resultString
+                    "result", result
             );
 
         } catch (Exception e) {
