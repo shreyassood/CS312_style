@@ -1,5 +1,10 @@
 import React from 'react';
 import Alert from "react-bootstrap/Alert";
+import {PrismLight as SyntaxHighlighter} from 'react-syntax-highlighter';
+import java from 'react-syntax-highlighter/dist/esm/languages/prism/java';
+import tomorrow from 'react-syntax-highlighter/dist/esm/styles/prism/tomorrow';
+
+SyntaxHighlighter.registerLanguage('java', java);
 
 type Props = {
     fileResults: APIResult | null,
@@ -76,9 +81,13 @@ export default function StyleResult(props: Props) {
                 </ul>
             }
 
-            <pre>
+            <SyntaxHighlighter
+                language="java"
+                style={tomorrow}
+                showLineNumbers
+            >
                 {props.fileResults.result.sourceCode}
-            </pre>
+            </SyntaxHighlighter>
 
         </div>
     )
