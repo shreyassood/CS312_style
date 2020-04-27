@@ -9,6 +9,9 @@ import './index.css';
 // @ts-ignore
 SyntaxHighlighter.registerLanguage('java', java);
 
+export const LINE_ERROR_CLASS_NAME = "line-error";
+export const LINE_NO_ERROR_CLASS_NAME = "line-no-error";
+
 type Props = {
     fileResults: APIResult | null,
 }
@@ -74,45 +77,50 @@ export default function StyleResult(props: Props) {
     }
 
     return (
-        <div>
+        <div className="container">
             {
-                <ul>
-                    {props.fileResults.result.errors.map(
-                        error => (
-                            <li>
-                                {error.lineNumber}:
-                                {error.columnNumber} --
-                                {error.message}
-                            </li>
-                        )
-                    )}
-                </ul>
+                <div className="row">
+                    <ul>
+                        {props.fileResults.result.errors.map(
+                            error => (
+                                <li>
+                                    {error.lineNumber}:
+                                    {error.columnNumber} --
+                                    {error.message}
+                                </li>
+                            )
+                        )}
+                    </ul>
+                </div>
             }
 
-            <SyntaxHighlighter
-                language="java"
-                style={tomorrow}
-                wrapLines
-                renderer={null}
-                astGenerator={null}
-                lineProps={
-                    (lineNumber: number) => {
-                        if (errorLineNumbers.includes(lineNumber)) {
-                            return {
-                                className: 'line-error',
+            <div className="row">
+                <SyntaxHighlighter
+                    className="col-md"
+                    language="java"
+                    style={tomorrow}
+                    wrapLines
+                    renderer={null}
+                    astGenerator={null}
+                    lineProps={
+                        (lineNumber: number) => {
+                            if (errorLineNumbers.includes(lineNumber)) {
+                                return {
+                                    className: LINE_ERROR_CLASS_NAME,
+                                }
+                            } else {
+                                return {
+                                    className: LINE_NO_ERROR_CLASS_NAME,
+                                }
                             }
-                        } else {
-                            return {
-                                className: 'line-no-error',
-                            }
-                        }
 
+                        }
                     }
-                }
-                showLineNumbers
-            >
-                {props.fileResults.result.sourceCode}
-            </SyntaxHighlighter>
+                    showLineNumbers
+                >
+                    {props.fileResults.result.sourceCode}
+                </SyntaxHighlighter>
+            </div>
 
         </div>
     )

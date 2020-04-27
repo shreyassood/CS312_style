@@ -1,4 +1,7 @@
 import React from 'react';
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Popover from "react-bootstrap/Popover";
+import {LINE_ERROR_CLASS_NAME} from "../StyleResult";
 
 export function createStyleObject(classNames, elementStyle = {}, stylesheet) {
   return classNames.reduce((styleObject, className) => {
@@ -60,6 +63,25 @@ export default function createElement({
           className: createClassNameString(properties.className)
         };
     const children = childrenCreator(node.children);
+
+    if (properties.className.includes(LINE_ERROR_CLASS_NAME)) {
+        return (<OverlayTrigger
+            placement="top-start"
+            overlay={
+                <Popover>
+                    <Popover.Title as="h3">Line 123</Popover.Title>
+                    <Popover.Content>
+                        <strong>Some error!</strong> Check this info.
+                    </Popover.Content>
+                </Popover>
+            }
+        >
+            <TagName key={key} {...props}>
+                {children}
+            </TagName>
+        </OverlayTrigger>)
+    }
+
     return (
       <TagName key={key} {...props}>
         {children}
