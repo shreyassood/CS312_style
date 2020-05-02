@@ -71,29 +71,18 @@ export default function StyleResult(props: Props) {
         )
     }
 
-    let errorMap: { [key: number]: CheckStyleError; } = {};
+    let errorMap: { [key: number]: CheckStyleError[]; } = {};
     for (const error of props.fileResults.result.errors) {
-        // TODO: can have multiple errors per line
-        errorMap[error.lineNumber] = error;
+        // each line can have multiple errors
+        if (errorMap.hasOwnProperty(error.lineNumber)) {
+            errorMap[error.lineNumber].push(error);
+        } else {
+            errorMap[error.lineNumber] = [error];
+        }
     }
 
     return (
         <div className="container">
-            {
-                <div className="row">
-                    <ul>
-                        {props.fileResults.result.errors.map(
-                            error => (
-                                <li>
-                                    {error.lineNumber}:
-                                    {error.columnNumber} --
-                                    {error.message}
-                                </li>
-                            )
-                        )}
-                    </ul>
-                </div>
-            }
 
             <div className="row">
                 <SyntaxHighlighter
@@ -107,7 +96,7 @@ export default function StyleResult(props: Props) {
                         (lineNumber: number) => {
                             if (errorMap.hasOwnProperty(lineNumber)) {
                                 return {
-                                    error: errorMap[lineNumber],
+                                    errors: errorMap[lineNumber],
                                     className: LINE_ERROR_CLASS_NAME,
                                 }
                             } else {
