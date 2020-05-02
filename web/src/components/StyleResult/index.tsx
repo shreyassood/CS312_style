@@ -85,6 +85,12 @@ export default function StyleResult(props: Props) {
         <div className="container">
 
             <div className="row">
+                <Alert variant="info" className="col-lg">
+                        Hover your cursor over the red lines with errors to see more information.
+                </Alert>
+            </div>
+
+            <div className="row">
                 <SyntaxHighlighter
                     className="col-md"
                     language="java"

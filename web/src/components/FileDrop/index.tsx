@@ -40,17 +40,17 @@ export default function FileDrop(props: Props) {
         <span>{file.name}</span>
     ));
 
+    if (!props.uploadingDocument) {
+        return (
+            <div className="dropzone" {...getRootProps({style})}>
+                <input {...getInputProps()} type="file" name="file"/>
+                <span>Drag 'n' drop some files here, or click to select files</span>
+            </div>
+        )
+    }
 
     return (
-            <section className="container">
-                {!props.uploadingDocument &&
-                <div className="dropzone" {...getRootProps({style})}>
-                    <input {...getInputProps()} type="file" name="file"/>
-                    <span>Drag 'n' drop some files here, or click to select files</span>
-                </div>}
-                {props.uploadingDocument &&
-                <p>Loading result for {files} ... </p>
-                }
-            </section>
-    );
+        <p>Loading result for {files} ... </p>
+    )
+
 }

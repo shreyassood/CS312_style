@@ -66,24 +66,34 @@ export default class App extends React.Component<Props, State> {
 
 
     render() {
+
+        let fileUpload;
+        if(!this.state.uploadedDocument) {
+            fileUpload =
+                <FileDrop
+                    acceptFileCallback={this.acceptFileCallback}
+                    uploadingDocument={this.state.uploadingDocument}
+                />
+        } else {
+            fileUpload =
+                <Button size="lg" onClick={this.uploadNewFile}>
+                    Upload another file
+                </Button>
+        }
+
         return (
             <div className="App">
                 <Jumbotron className="App-header" fluid>
                     <h1>CS312 Style Checker</h1>
                 </Jumbotron>
 
-                {!this.state.uploadedDocument &&
-                <FileDrop
-                    acceptFileCallback={this.acceptFileCallback}
-                    uploadingDocument={this.state.uploadingDocument}
-                />
-                }
+                <div className="container upload-container">
 
-                {this.state.uploadedDocument &&
-                <Button size="lg" onClick={this.uploadNewFile}>
-                    Upload another file
-                </Button>
-                }
+                    <div className="row justify-content-center">
+                        {fileUpload}
+                    </div>
+
+                </div>
 
                 {this.state.uploadedDocument &&
                 <StyleResult fileResults={this.state.fileResults}/>
