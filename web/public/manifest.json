@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "CS312 Style Checker",
+  "name": "CS312 Style Checker",
   "icons": [
     {
       "src": "favicon.ico",
