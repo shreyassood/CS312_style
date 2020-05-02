@@ -68,7 +68,7 @@ export default function createElement({
         let errors = properties.errors;
         let lineNumber = errors[0].lineNumber;
         return (<OverlayTrigger
-            placement="top-start"
+            placement="auto-start"
             overlay={
                 <Popover>
                     <Popover.Title as="h3">Line {lineNumber}</Popover.Title>
