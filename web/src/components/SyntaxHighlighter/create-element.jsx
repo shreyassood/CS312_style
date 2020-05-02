@@ -64,14 +64,15 @@ export default function createElement({
         };
     const children = childrenCreator(node.children);
 
-    if (properties.className.includes(LINE_ERROR_CLASS_NAME)) {
+    if (properties.hasOwnProperty('error')) {
+        let error = properties.error;
         return (<OverlayTrigger
             placement="top-start"
             overlay={
                 <Popover>
-                    <Popover.Title as="h3">Line 123</Popover.Title>
+                    <Popover.Title as="h3">Line {error.lineNumber}</Popover.Title>
                     <Popover.Content>
-                        <strong>Some error!</strong> Check this info.
+                        <strong>{error.message}</strong>
                     </Popover.Content>
                 </Popover>
             }

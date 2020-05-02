@@ -71,9 +71,10 @@ export default function StyleResult(props: Props) {
         )
     }
 
-    let errorLineNumbers: number[] = [];
+    let errorMap: { [key: number]: CheckStyleError; } = {};
     for (const error of props.fileResults.result.errors) {
-        errorLineNumbers.push(error.lineNumber);
+        // TODO: can have multiple errors per line
+        errorMap[error.lineNumber] = error;
     }
 
     return (
@@ -104,8 +105,9 @@ export default function StyleResult(props: Props) {
                     astGenerator={null}
                     lineProps={
                         (lineNumber: number) => {
-                            if (errorLineNumbers.includes(lineNumber)) {
+                            if (errorMap.hasOwnProperty(lineNumber)) {
                                 return {
+                                    error: errorMap[lineNumber],
                                     className: LINE_ERROR_CLASS_NAME,
                                 }
                             } else {
