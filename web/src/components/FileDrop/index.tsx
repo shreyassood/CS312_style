@@ -19,7 +19,7 @@ type Props = {
 
 export default function FileDrop(props: Props) {
     const {
-        acceptedFiles,
+        // acceptedFiles,
         getRootProps,
         getInputProps,
         isDragActive,
@@ -37,9 +37,9 @@ export default function FileDrop(props: Props) {
     ]) as React.CSSProperties;
 
 
-    const files = acceptedFiles.map(file => (
-        <span>{file.name}</span>
-    ));
+    // const files = acceptedFiles.map(file => (
+    //     <span>{file.name}</span>
+    // ));
 
     if (!props.uploadingDocument) {
         return (
