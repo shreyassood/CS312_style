@@ -1,5 +1,5 @@
 import React from 'react';
-import Alert from "react-bootstrap/Alert";
+import {Alert, Col, Row} from 'antd';
 import {PrismLight as SyntaxHighlighter} from '../SyntaxHighlighter';
 import java from '../SyntaxHighlighter/languages/prism/java';
 import tomorrow from '../SyntaxHighlighter/styles/prism/tomorrow';
@@ -37,35 +37,32 @@ export default function StyleResult(props: Props) {
 
     if (props.fileResults == null) {
         return (
-            <Alert variant="danger">
-                <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
-                <p>
-                    Problem communicating with server, please try again later.
-                </p>
-            </Alert>
+            <Alert
+                type="error"
+                message="Oh snap! You got an error!"
+                description="Problem communicating with server, please try again later."
+            />
         )
     }
 
     // Exception from CheckStyle
     if (props.fileResults.error != null) {
         return (
-            <Alert variant="danger">
-                <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
-                <p>
-                    {props.fileResults.error}
-                </p>
-            </Alert>
+            <Alert
+                type="error"
+                message="Oh snap! You got an error!"
+                description={props.fileResults.error}
+            />
         )
     }
 
     if (props.fileResults.result == null) {
         return (
-            <Alert variant="danger">
-                <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
-                <p>
-                    Unknown problem occurred.
-                </p>
-            </Alert>
+            <Alert
+                type="error"
+                message="Oh snap! You got an error!"
+                description="Unknown problem occurred."
+            />
         )
     }
 
@@ -88,15 +85,17 @@ export default function StyleResult(props: Props) {
     }
 
     return (
-        <div className="container">
+        <div>
 
-            <div className="row">
-                <Alert variant="info" className="col-lg">
-                        Hover your cursor over the red lines with errors to see more information.
-                </Alert>
-            </div>
+            <Row>
+                <Alert
+                    type="info"
+                    message="Hover your cursor over the red lines with errors to see more information."
+                />
+            </Row>
 
-            <div className="row">
+            <Row>
+                <Col span={16} offset={4}>
                 <SyntaxHighlighter
                     className="col-md"
                     language="java"
@@ -123,7 +122,8 @@ export default function StyleResult(props: Props) {
                 >
                     {props.fileResults.result.sourceCode}
                 </SyntaxHighlighter>
-            </div>
+                </Col>
+            </Row>
 
         </div>
     )

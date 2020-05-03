@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {DropEvent, useDropzone} from 'react-dropzone';
 
 import './index.css';
-import Spinner from "react-bootstrap/Spinner";
+import { Spin } from "antd";
 
 const activeStyle = {
     borderColor: '#2196f3'
@@ -51,9 +51,7 @@ export default function FileDrop(props: Props) {
     }
 
     return (
-        <Spinner animation="border" role="status" variant="primary">
-            <span className="sr-only">Loading...</span>
-        </Spinner>
+        <Spin/>
     )
 
 }

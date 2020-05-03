@@ -1,7 +1,5 @@
-.App-header {
-    background-color: #282c34;
-    color: white;
-    text-align: center;
+body {
+    background-color: rgb(243, 243, 243);
 }
 
 .upload-container {

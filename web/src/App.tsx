@@ -1,11 +1,10 @@
 import React from 'react';
 import FileDrop from './components/FileDrop'
 import StyleResult, {APIResult} from "./components/StyleResult";
-import Button from "react-bootstrap/Button";
+import {Affix, Button, PageHeader, Row, Col} from "antd";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'antd/dist/antd.css';
 import './App.css';
-import Jumbotron from "react-bootstrap/Jumbotron";
 
 type Props = {}
 
@@ -85,22 +84,25 @@ export default class App extends React.Component<Props, State> {
                 />
         } else {
             fileUpload =
-                <Button size="lg" onClick={this.uploadNewFile}>
+                <Button size="large" onClick={this.uploadNewFile}>
                     Upload another file
                 </Button>
         }
 
         return (
             <div className="App">
-                <Jumbotron className="App-header" fluid>
-                    <h1>CS312 Style Checker</h1>
-                </Jumbotron>
+                <Affix>
+                <PageHeader
+                    ghost={false}
+                    title="CS312 Style Checker"
+                />
+                </Affix>
 
-                <div className="container upload-container">
+                <div className="upload-container">
 
-                    <div className="row justify-content-center">
+                    <Row>
                         {fileUpload}
-                    </div>
+                    </Row>
 
                 </div>
 

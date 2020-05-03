@@ -1,7 +1,5 @@
 import React from 'react';
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Popover from "react-bootstrap/Popover";
-import ListGroup from "react-bootstrap/ListGroup";
+import {Popover, List, Badge} from "antd";
 
 export function createStyleObject(classNames, elementStyle = {}, stylesheet) {
   return classNames.reduce((styleObject, className) => {
@@ -67,27 +65,25 @@ export default function createElement({
     if (properties.hasOwnProperty('errors')) {
         let errors = properties.errors;
         let lineNumber = errors[0].lineNumber;
-        return (<OverlayTrigger
-            placement="auto-start"
-            overlay={
-                <Popover>
-                    <Popover.Title as="h3">Line {lineNumber}</Popover.Title>
-                    <Popover.Content>
-                        <ListGroup variant="flush">
-                            {errors.map((error) => (
-                                <ListGroup.Item>
-                                    {error.message}
-                                </ListGroup.Item>
-                            ))}
-                        </ListGroup>
-                    </Popover.Content>
-                </Popover>
-            }
+        return (<Popover
+                placement="top"
+                autoAdjustOverflow
+                title={<span>Line {lineNumber}</span>}
+                content={
+                    <List
+                        dataSource={errors}
+                        renderItem={error => (
+                            <List.Item>
+                                {error.message}
+                            </List.Item>
+                        )}
+                    />
+                }
         >
-            <TagName key={key} {...props}>
-                {children}
-            </TagName>
-        </OverlayTrigger>)
+                <TagName key={key} {...props}>
+                    {children}
+                </TagName>
+            </Popover>)
     }
 
     return (
