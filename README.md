@@ -1,5 +1,5 @@
-# 312_style
-Style Checker for CS312 at UT
+# CS312_style
+Style Checker for CS312 at UT: https://cs312style.herokuapp.com/
 
 
 ## Local Run Instructions:
