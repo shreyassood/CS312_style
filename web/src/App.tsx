@@ -48,13 +48,22 @@ export default class App extends React.Component<Props, State> {
             body: formData
         })
             .then(response => response.json())
-            .then(data => {
-                this.setState({
-                    fileResults: data,
-                    uploadedDocument: true,
-                    uploadingDocument: false,
-                });
-            })
+            .then(
+                (data) => {
+                    this.setState({
+                        fileResults: data,
+                        uploadedDocument: true,
+                        uploadingDocument: false,
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        fileResults: null,
+                        uploadedDocument: true,
+                        uploadingDocument: false,
+                    });
+                }
+            )
     }
 
     uploadNewFile() {

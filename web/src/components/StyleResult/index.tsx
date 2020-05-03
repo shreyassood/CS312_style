@@ -37,9 +37,12 @@ export default function StyleResult(props: Props) {
 
     if (props.fileResults == null) {
         return (
-            <div>
-                Unknown error occurred
-            </div>
+            <Alert variant="danger">
+                <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                <p>
+                    Problem communicating with server, please try again later.
+                </p>
+            </Alert>
         )
     }
 
@@ -57,9 +60,12 @@ export default function StyleResult(props: Props) {
 
     if (props.fileResults.result == null) {
         return (
-            <div>
-                Unknown error occurred
-            </div>
+            <Alert variant="danger">
+                <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                <p>
+                    Unknown problem occurred.
+                </p>
+            </Alert>
         )
     }
 
