@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, Col, Row} from 'antd';
+import {Alert, Col, message, Row} from 'antd';
 import {PrismLight as SyntaxHighlighter} from '../SyntaxHighlighter';
 import java from '../SyntaxHighlighter/languages/prism/java';
 import tomorrow from '../SyntaxHighlighter/styles/prism/tomorrow';
@@ -36,42 +36,43 @@ type CheckStyleError = {
 export default function StyleResult(props: Props) {
 
     if (props.fileResults == null) {
+        message.error(
+            "Unknown problem occurred."
+        );
         return (
-            <Alert
-                type="error"
-                message="Oh snap! You got an error!"
-                description="Problem communicating with server, please try again later."
-            />
-        )
+            <span>
+
+            </span>
+        );
     }
 
     // Exception from CheckStyle
     if (props.fileResults.error != null) {
+        message.error(
+            props.fileResults.error
+        );
         return (
-            <Alert
-                type="error"
-                message="Oh snap! You got an error!"
-                description={props.fileResults.error}
-            />
-        )
+            <span>
+
+            </span>
+        );
     }
 
     if (props.fileResults.result == null) {
+        message.error(
+            "Unknown problem occurred."
+        );
         return (
-            <Alert
-                type="error"
-                message="Oh snap! You got an error!"
-                description="Unknown problem occurred."
-            />
-        )
+            <span>
+
+            </span>
+        );
     }
 
     if (props.fileResults.result.errors.length === 0) {
-        return (
-            <div>
-                No errors found!
-            </div>
-        )
+        message.info(
+            "No errors found!"
+        );
     }
 
     let errorMap: { [key: number]: CheckStyleError[]; } = {};

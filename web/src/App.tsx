@@ -1,7 +1,7 @@
 import React from 'react';
 import FileDrop from './components/FileDrop'
 import StyleResult, {APIResult} from "./components/StyleResult";
-import {Affix, Button, PageHeader, Row, Col} from "antd";
+import {Affix, Button, PageHeader, Row, message} from "antd";
 
 import 'antd/dist/antd.css';
 import './App.css';
@@ -56,9 +56,12 @@ export default class App extends React.Component<Props, State> {
                     });
                 },
                 (error) => {
+                    message.error(
+                        "Problem communicating with server, please try again later."
+                    );
                     this.setState({
                         fileResults: null,
-                        uploadedDocument: true,
+                        uploadedDocument: false,
                         uploadingDocument: false,
                     });
                 }
