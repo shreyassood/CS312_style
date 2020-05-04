@@ -94,6 +94,13 @@ export default class App extends React.Component<Props, State> {
             <div className="App">
                 <Navbar bg="dark" variant="dark" className="header">
                     <Navbar.Brand>
+                        <img
+                            alt=""
+                            src="/logo192.png"
+                            width="30"
+                            height="30"
+                            className="d-inline-block align-top"
+                        />{' '}
                         CS312 Style Checker
                     </Navbar.Brand>
                 </Navbar>
