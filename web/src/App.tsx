@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Jumbotron from "react-bootstrap/Jumbotron";
+import Navbar from "react-bootstrap/Navbar";
 
 type Props = {}
 
@@ -92,9 +92,11 @@ export default class App extends React.Component<Props, State> {
 
         return (
             <div className="App">
-                <Jumbotron className="App-header" fluid>
-                    <h1>CS312 Style Checker</h1>
-                </Jumbotron>
+                <Navbar bg="dark" variant="dark" className="header">
+                    <Navbar.Brand>
+                        CS312 Style Checker
+                    </Navbar.Brand>
+                </Navbar>
 
                 <div className="container upload-container">
 
