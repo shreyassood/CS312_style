@@ -117,6 +117,12 @@ export default class App extends React.Component<Props, State> {
                 <StyleResult fileResults={this.state.fileResults}/>
                 }
 
+                <div className="footer">
+                    <a href="https://github.com/shreyassood/CS312_style" target="_blank">
+                        Made in Austin, TX.
+                    </a>
+                </div>
+
             </div>
         );
     }
