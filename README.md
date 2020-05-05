@@ -1,6 +1,9 @@
 # CS312_style
 Style Checker for CS312 at UT: https://cs312style.herokuapp.com/
 
+### Status
+![Build CI](https://github.com/shreyassood/CS312_style/workflows/Build%20CI/badge.svg)
+
 
 ## Local Run Instructions:
 `mvn clean install && heroku local`
