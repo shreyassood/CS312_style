@@ -26,8 +26,7 @@ jobs:
     - name: Setup Node
       uses: actions/setup-node@v1.4.2
       
-    - name: Setup Maven
+    - name: Maven Build
       uses: comchangs/action-maven@v0.4-beta
-      
-    - name: Build
-      run: mvn clean install
+      with: 
+        args: clean install
