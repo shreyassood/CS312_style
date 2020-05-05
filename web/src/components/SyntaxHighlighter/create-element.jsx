@@ -69,6 +69,7 @@ export default function createElement({
         let lineNumber = errors[0].lineNumber;
         return (<OverlayTrigger
             placement="auto-start"
+            delay={{hide: 2000}}
             overlay={
                 <Popover>
                     <Popover.Title as="h3">Line {lineNumber}</Popover.Title>
@@ -77,6 +78,12 @@ export default function createElement({
                             {errors.map((error) => (
                                 <ListGroup.Item>
                                     {error.message}
+                                    &nbsp;
+                                    {error.infoUrl != null &&
+                                    <a href={error.infoUrl}
+                                       target="_blank"
+                                       rel="noopener noreferrer">More info</a>
+                                    }
                                 </ListGroup.Item>
                             ))}
                         </ListGroup>

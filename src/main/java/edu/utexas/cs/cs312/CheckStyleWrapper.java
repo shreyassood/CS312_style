@@ -14,6 +14,8 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static edu.utexas.cs.cs312.ResultInfo.INFO_URLS;
+
 // From CheckStyle Source (Main)
 public class CheckStyleWrapper {
 
@@ -67,11 +69,22 @@ public class CheckStyleWrapper {
 
         @Override
         public void addError(AuditEvent auditEvent) {
-            errors.add(new CheckStyleResult.CheckStyleError(
-                    auditEvent.getLine(),
-                    auditEvent.getColumn(),
-                    auditEvent.getMessage()
-            ));
+
+            // add extra information link if specified
+            if (INFO_URLS.containsKey(auditEvent.getSourceName())) {
+                errors.add(new CheckStyleResult.CheckStyleError(
+                        auditEvent.getLine(),
+                        auditEvent.getColumn(),
+                        auditEvent.getMessage(),
+                        INFO_URLS.get(auditEvent.getSourceName())
+                ));
+            } else {
+                errors.add(new CheckStyleResult.CheckStyleError(
+                        auditEvent.getLine(),
+                        auditEvent.getColumn(),
+                        auditEvent.getMessage()
+                ));
+            }
         }
 
         @Override

@@ -30,7 +30,8 @@ export type CheckStyleResult = {
 type CheckStyleError = {
     lineNumber: number,
     columnNumber: number,
-    message: string
+    message: string,
+    infoUrl: string | null,
 }
 
 function Error(message: string) {

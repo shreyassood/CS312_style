@@ -20,11 +20,17 @@ public class CheckStyleResult {
         public int lineNumber;
         public int columnNumber;
         public String message;
+        public String infoUrl;
 
         public CheckStyleError(int lineNumber, int columnNumber, String message) {
             this.lineNumber = lineNumber;
             this.columnNumber = columnNumber;
             this.message = message;
+        }
+
+        public CheckStyleError(int lineNumber, int columnNumber, String message, String infoUrl) {
+            this(lineNumber, columnNumber, message);
+            this.infoUrl = infoUrl;
         }
 
     }
