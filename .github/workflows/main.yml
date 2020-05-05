@@ -29,3 +29,5 @@ jobs:
       
     - name: Maven Build
       run: mvn clean install
+      env:
+        CI: false
