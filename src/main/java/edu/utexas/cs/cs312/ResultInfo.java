@@ -12,8 +12,7 @@ public class ResultInfo {
             ImmutableMap.<String, String>builder()
                     .put(
                             "com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck",
-                            //TODO Add actual link
-                            "https://wikis.utexas.edu/"
+                            "https://wikis.utexas.edu/display/cs312style/Magic+Literals"
                     )
                     .build();
 
