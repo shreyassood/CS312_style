@@ -2,6 +2,8 @@ package edu.utexas.cs.cs312;
 
 
 import com.google.common.collect.ImmutableMap;
+import com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck;
+import com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck;
 
 public class ResultInfo {
 
@@ -11,8 +13,12 @@ public class ResultInfo {
     public final static ImmutableMap<String, String> INFO_URLS =
             ImmutableMap.<String, String>builder()
                     .put(
-                            "com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck",
+                            MagicNumberCheck.class.getName(),
                             "https://wikis.utexas.edu/display/cs312style/Magic+Literals"
+                    )
+                    .put(
+                            LineLengthCheck.class.getName(),
+                            "https://wikis.utexas.edu/display/cs312style/Code+Cleanliness"
                     )
                     .build();
 
