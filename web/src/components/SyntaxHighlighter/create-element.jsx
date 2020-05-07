@@ -1,7 +1,7 @@
 import React from 'react';
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Popover from "react-bootstrap/Popover";
 import ListGroup from "react-bootstrap/ListGroup";
+import PopoverStickOnHover from "../PopoverStickOnHover";
 
 export function createStyleObject(classNames, elementStyle = {}, stylesheet) {
   return classNames.reduce((styleObject, className) => {
@@ -67,34 +67,37 @@ export default function createElement({
     if (properties.hasOwnProperty('errors')) {
         let errors = properties.errors;
         let lineNumber = errors[0].lineNumber;
-        return (<OverlayTrigger
-            placement="auto-start"
-            delay={{hide: 2000}}
-            overlay={
-                <Popover>
-                    <Popover.Title as="h3">Line {lineNumber}</Popover.Title>
-                    <Popover.Content>
-                        <ListGroup variant="flush">
-                            {errors.map((error) => (
-                                <ListGroup.Item>
-                                    {error.message}
-                                    &nbsp;
-                                    {error.infoUrl != null &&
-                                    <a href={error.infoUrl}
-                                       target="_blank"
-                                       rel="noopener noreferrer">More info</a>
-                                    }
-                                </ListGroup.Item>
-                            ))}
-                        </ListGroup>
-                    </Popover.Content>
-                </Popover>
-            }
-        >
-            <TagName key={key} {...props}>
-                {children}
-            </TagName>
-        </OverlayTrigger>)
+
+        let popupComponent = (<div>
+                <Popover.Title as="h3">Line {lineNumber}</Popover.Title>
+                <Popover.Content>
+                    <ListGroup variant="flush">
+                        {errors.map((error) => (
+                            <ListGroup.Item>
+                                {error.message}
+                                &nbsp;
+                                {error.infoUrl != null &&
+                                <a href={error.infoUrl}
+                                   target="_blank"
+                                   rel="noopener noreferrer">More info</a>
+                                }
+                            </ListGroup.Item>
+                        ))}
+                    </ListGroup>
+                </Popover.Content>
+            </div>);
+
+        return (
+            <PopoverStickOnHover
+                component={popupComponent}
+                placement="auto-start"
+                delay={50}
+            >
+                <TagName key={key} {...props}>
+                    {children}
+                </TagName>
+            </PopoverStickOnHover>
+        )
     }
 
     return (
