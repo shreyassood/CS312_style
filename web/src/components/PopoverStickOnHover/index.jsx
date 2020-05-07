@@ -3,10 +3,11 @@
 import { Overlay, Popover } from 'react-bootstrap';
 import React, {useEffect, useRef, useState} from "react";
 
-function PopoverStickOnHover({ delay, onMouseEnter, children, component, placement }) {
+function PopoverStickOnHover({ delay, leaveDelay, onMouseEnter, children, component, placement }) {
     const [showPopover, setShowPopover] = useState(false);
     const childNode = useRef(null);
     let setTimeoutConst = null;
+    let setTimeOutLeaveConst = null;
 
     useEffect(() => {
         return () => {
@@ -17,6 +18,7 @@ function PopoverStickOnHover({ delay, onMouseEnter, children, component, placeme
     });
 
     const handleMouseEnter = () => {
+        clearTimeout(setTimeOutLeaveConst);
         setTimeoutConst = setTimeout(() => {
             setShowPopover(true);
             onMouseEnter();
@@ -25,7 +27,9 @@ function PopoverStickOnHover({ delay, onMouseEnter, children, component, placeme
 
     const handleMouseLeave = () => {
         clearTimeout(setTimeoutConst);
-        setShowPopover(false);
+        setTimeOutLeaveConst = setTimeout(() => {
+            setShowPopover(false);
+        }, leaveDelay)
     };
 
     const displayChild = React.Children.map(children, child =>
@@ -54,6 +58,7 @@ function PopoverStickOnHover({ delay, onMouseEnter, children, component, placeme
             >
                 <Popover
                     onMouseEnter={() => {
+                        clearTimeout(setTimeOutLeaveConst);
                         setShowPopover(true);
                     }}
                     onMouseLeave={handleMouseLeave}
@@ -68,6 +73,7 @@ function PopoverStickOnHover({ delay, onMouseEnter, children, component, placeme
 
 PopoverStickOnHover.defaultProps = {
     delay: 0,
+    leaveDelay: 0,
     onMouseEnter: () => {}
 };
 

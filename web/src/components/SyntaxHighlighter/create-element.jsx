@@ -91,7 +91,7 @@ export default function createElement({
             <PopoverStickOnHover
                 component={popupComponent}
                 placement="auto-start"
-                delay={50}
+                leaveDelay={400}
             >
                 <TagName key={key} {...props}>
                     {children}
