@@ -7,6 +7,11 @@
 
     <property name="fileExtensions" value="java"/>
 
+    <!-- Sets width of a tab to be equal to 4 space characters -->
+    <module name="Checker">
+        <property name="tabWidth" value="4"/>
+    </module>
+
     <!-- Check for lines longer than 100 characters -->
     <module name="LineLength">
         <property name="max" value="100"/>
