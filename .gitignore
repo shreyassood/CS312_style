@@ -5,6 +5,9 @@ src/main/resources/static/
 cs312.iml
 .idea/
 
+# VSCode Files
+.vscode/
+
 # Maven build target
 target/
 
