@@ -1,7 +1,8 @@
 # CS312_style
-Style Checker for CS312 at UT: 
-Production: https://cs312style.herokuapp.com/
-Stage: https://cs312style-stage.herokuapp.com/ (Should be in sync with master)
+Style Checker for CS312 at UT.
+
+#### Production: https://cs312style.herokuapp.com/
+#### Stage: https://cs312style-stage.herokuapp.com/ (Should be in sync with master)
 
 ### Status
 ![Build CI](https://github.com/shreyassood/CS312_style/workflows/Build%20CI/badge.svg)
