@@ -1,4 +1,12 @@
 {
 	"name": "CS312 Style Checker",
-	"description": "Style Checker for CS312 at UT"
+	"description": "Style Checker for CS312 at UT",
+	"buildpacks": [
+		{
+			"url": "heroku/nodejs"
+		},
+		{
+			"url": "heroku/java"
+		}	
+  	]
 }
