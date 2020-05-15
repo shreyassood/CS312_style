@@ -17,5 +17,4 @@ See https://github.com/shreyassood/CS312_style/tree/master/web on how to run Rea
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/shreyassood/CS312_style)
 
-Add node support on heroku (to build React UI):
-`heroku buildpacks:add --index 1 heroku/nodejs`
+Uses multiple buildpacks (Java-Maven and Node) to setup Spring Backend and Build React Frontend
