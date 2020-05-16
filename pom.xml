@@ -82,7 +82,7 @@
 						</goals>
 						<configuration>
 							<target>
-								<exec executable="/bin/bash"
+								<exec executable="bash"
 									failonerror="true">
 									<arg value="build.sh"/>
 								</exec>
