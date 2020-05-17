@@ -17,6 +17,9 @@
 
     <module name="TreeWalker">
 
+        <!-- Enforces braces with do, else, for, if, while  -->
+        <module name="NeedBraces"/>
+
         <!-- Check for magic numbers (any non -1, 0, 1 numbers) -->
         <module name="MagicNumber">
             <property name="ignoreNumbers" value="-1, 0, 1"/>
