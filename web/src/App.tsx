@@ -15,8 +15,7 @@ type State = {
     fileResults: APIResult | null
 }
 
-const HASH_FOR_RESULT = '#result';
-
+const RESULT_URL = '#result';
 
 export default class App extends React.Component<Props, State> {
 
@@ -34,15 +33,17 @@ export default class App extends React.Component<Props, State> {
         this.componentDidMount = this.componentDidMount.bind(this);
     }
 
-    componentDidMount() {
+    //add event listener for popstate so that when back button or forward button 
+    //is clicked, the state changes accordingly (basically to track button clicks)
+    componentDidMount() { 
 
         window.addEventListener('popstate', (event) => {
-            if(window.location.hash !== HASH_FOR_RESULT){
+            if(window.location.hash !== RESULT_URL) {
                 this.setState({
                     uploadedDocument: false,
                     uploadingDocument: false,
                 });
-            } else{
+            } else {
                 this.setState({
                     uploadedDocument: true,
                     uploadingDocument: true,
@@ -75,7 +76,7 @@ export default class App extends React.Component<Props, State> {
                         uploadedDocument: true,
                         uploadingDocument: false,
                     });
-                    window.location.hash = HASH_FOR_RESULT;
+                    window.location.hash = RESULT_URL;
                 },
                 (error) => {
                     this.setState({
@@ -83,7 +84,7 @@ export default class App extends React.Component<Props, State> {
                         uploadedDocument: true,
                         uploadingDocument: false,
                     });
-                    window.location.hash = HASH_FOR_RESULT;
+                    window.location.hash = RESULT_URL;
                 }
             )
     }
