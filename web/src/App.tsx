@@ -33,8 +33,8 @@ export default class App extends React.Component<Props, State> {
         this.componentDidMount = this.componentDidMount.bind(this);
     }
 
-    //add event listener for popstate so that when back button or forward button 
-    //is clicked, the state changes accordingly (basically to track button clicks)
+    // add event listener for popstate so that when back button or forward button 
+    // is clicked update react state to show results / upload file button
     componentDidMount() { 
 
         window.addEventListener('popstate', (event) => {
