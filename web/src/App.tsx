@@ -15,6 +15,8 @@ type State = {
     fileResults: APIResult | null
 }
 
+const HASH_FOR_RESULT = '#result';
+
 
 export default class App extends React.Component<Props, State> {
 
@@ -33,25 +35,20 @@ export default class App extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        // let oldPushState = window.history.pushState
 
-        // window.history.pushState = (state, title, url) => {
-        //     this.setState({url: url, user: state})
-
-        //     oldPushState.call(window.history, state, title, url)
-        // };
-        window.onpopstate = function(){
-            if(window.location.hash == 'uploaded'){
+        window.addEventListener('popstate', (event) => {
+            if(window.location.hash !== HASH_FOR_RESULT){
                 this.setState({
                     uploadedDocument: false,
                     uploadingDocument: false,
                 });
+            } else{
+                this.setState({
+                    uploadedDocument: true,
+                    uploadingDocument: true,
+                });
             }
-
-        };
-
-        // after initial page load use the current url to kick off the app
-        //this.setState({url: window.location.pathname})
+        })
     }
 
     acceptFileCallback<T extends File>(files: T[]) {
@@ -78,7 +75,7 @@ export default class App extends React.Component<Props, State> {
                         uploadedDocument: true,
                         uploadingDocument: false,
                     });
-                    window.location.hash = 'uploaded';
+                    window.location.hash = HASH_FOR_RESULT;
                 },
                 (error) => {
                     this.setState({
@@ -86,7 +83,7 @@ export default class App extends React.Component<Props, State> {
                         uploadedDocument: true,
                         uploadingDocument: false,
                     });
-                    window.location.hash = 'uploaded';
+                    window.location.hash = HASH_FOR_RESULT;
                 }
             )
     }
@@ -113,7 +110,6 @@ export default class App extends React.Component<Props, State> {
                 <Button size="lg" onClick={this.uploadNewFile}>
                     Upload another file
                 </Button>
-            //window.location.hash = 'uploaded';
         }
 
         return (
