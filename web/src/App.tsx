@@ -15,6 +15,7 @@ type State = {
     fileResults: APIResult | null
 }
 
+const RESULT_URL = '#result';
 
 export default class App extends React.Component<Props, State> {
 
@@ -29,6 +30,26 @@ export default class App extends React.Component<Props, State> {
         // bind to access setState in callback
         this.acceptFileCallback = this.acceptFileCallback.bind(this);
         this.uploadNewFile = this.uploadNewFile.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
+    }
+
+    // add event listener for popstate so that when back button or forward button 
+    // is clicked update react state to show results / upload file button
+    componentDidMount() { 
+
+        window.addEventListener('popstate', (event) => {
+            if(window.location.hash !== RESULT_URL) {
+                this.setState({
+                    uploadedDocument: false,
+                    uploadingDocument: false,
+                });
+            } else {
+                this.setState({
+                    uploadedDocument: true,
+                    uploadingDocument: true,
+                });
+            }
+        })
     }
 
     acceptFileCallback<T extends File>(files: T[]) {
@@ -55,6 +76,7 @@ export default class App extends React.Component<Props, State> {
                         uploadedDocument: true,
                         uploadingDocument: false,
                     });
+                    window.location.hash = RESULT_URL;
                 },
                 (error) => {
                     this.setState({
@@ -62,6 +84,7 @@ export default class App extends React.Component<Props, State> {
                         uploadedDocument: true,
                         uploadingDocument: false,
                     });
+                    window.location.hash = RESULT_URL;
                 }
             )
     }
