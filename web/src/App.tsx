@@ -29,6 +29,29 @@ export default class App extends React.Component<Props, State> {
         // bind to access setState in callback
         this.acceptFileCallback = this.acceptFileCallback.bind(this);
         this.uploadNewFile = this.uploadNewFile.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
+    }
+
+    componentDidMount() {
+        // let oldPushState = window.history.pushState
+
+        // window.history.pushState = (state, title, url) => {
+        //     this.setState({url: url, user: state})
+
+        //     oldPushState.call(window.history, state, title, url)
+        // };
+        window.onpopstate = function(){
+            if(window.location.hash == 'uploaded'){
+                this.setState({
+                    uploadedDocument: false,
+                    uploadingDocument: false,
+                });
+            }
+
+        };
+
+        // after initial page load use the current url to kick off the app
+        //this.setState({url: window.location.pathname})
     }
 
     acceptFileCallback<T extends File>(files: T[]) {
@@ -55,6 +78,7 @@ export default class App extends React.Component<Props, State> {
                         uploadedDocument: true,
                         uploadingDocument: false,
                     });
+                    window.location.hash = 'uploaded';
                 },
                 (error) => {
                     this.setState({
@@ -62,6 +86,7 @@ export default class App extends React.Component<Props, State> {
                         uploadedDocument: true,
                         uploadingDocument: false,
                     });
+                    window.location.hash = 'uploaded';
                 }
             )
     }
@@ -88,6 +113,7 @@ export default class App extends React.Component<Props, State> {
                 <Button size="lg" onClick={this.uploadNewFile}>
                     Upload another file
                 </Button>
+            //window.location.hash = 'uploaded';
         }
 
         return (
