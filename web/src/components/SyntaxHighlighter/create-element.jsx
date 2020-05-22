@@ -92,6 +92,7 @@ export default function createElement({
                 component={popupComponent}
                 placement="auto-start"
                 leaveDelay={400}
+                delay={50}
             >
                 <TagName key={key} {...props}>
                     {children}
