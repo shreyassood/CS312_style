@@ -4,6 +4,7 @@ package edu.utexas.cs.cs312;
 import com.google.common.collect.ImmutableMap;
 import com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck;
 import com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck;
+import edu.utexas.cs.cs312.checks.DefaultPackage;
 
 public class ResultInfo {
 
@@ -19,6 +20,10 @@ public class ResultInfo {
                     .put(
                             LineLengthCheck.class.getName(),
                             "https://wikis.utexas.edu/display/cs312style/Code+Cleanliness"
+                    )
+                    .put(
+                            DefaultPackage.class.getName(),
+                            "https://wikis.utexas.edu/display/cs312style/Class+Setup"
                     )
                     .build();
 
