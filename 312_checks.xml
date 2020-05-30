@@ -31,6 +31,9 @@
         <module name="RedundantImport"/>
         <module name="UnusedImports"/>
 
+        <!-- Check that file name matches class name (or other outer type) -->
+        <module name="OuterTypeFilename"/>
+
         <!-- ***************************************************************** -->
 
         <!-- Enforces braces with do, else, for, if, while  -->
