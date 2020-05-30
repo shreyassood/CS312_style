@@ -17,6 +17,12 @@
 
     <module name="TreeWalker">
 
+        <!--
+        **************************************************************************
+        *** Class Setup Checks
+        **************************************************************************
+        -->
+
         <!-- Check package is the default package (no package statement) -->
         <module name="edu.utexas.cs.cs312.checks.DefaultPackage"/>
 
@@ -24,6 +30,8 @@
         <module name="AvoidStarImport"/>
         <module name="RedundantImport"/>
         <module name="UnusedImports"/>
+
+        <!-- ***************************************************************** -->
 
         <!-- Enforces braces with do, else, for, if, while  -->
         <module name="NeedBraces"/>
