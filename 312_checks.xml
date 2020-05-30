@@ -17,6 +17,9 @@
 
     <module name="TreeWalker">
 
+        <!-- Check package is the default package (no package statement) -->
+        <module name="edu.utexas.cs.cs312.checks.DefaultPackage"/>
+
         <!-- Enforces braces with do, else, for, if, while  -->
         <module name="NeedBraces"/>
 
