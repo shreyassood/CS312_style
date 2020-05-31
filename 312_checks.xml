@@ -48,6 +48,16 @@
         <!-- Makes sure each variable declaration in a single statement on a line -->
         <module name="MultipleVariableDeclarations"/>
 
+        <!-- Clean spacing checks -->
+        <module name="MethodParamPad"/>
+        <module name="NoWhitespaceAfter"/>
+        <module name="NoWhitespaceBefore"/>
+        <module name="ParenPad"/>
+        <module name="SingleSpaceSeparator"/>
+        <module name="TypecastParenPad"/>
+        <module name="WhitespaceAfter"/>
+        <module name="WhitespaceAround"/>
+
         <!-- ***************************************************************** -->
 
         <!-- Enforces braces with do, else, for, if, while  -->
