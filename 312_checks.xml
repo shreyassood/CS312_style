@@ -45,6 +45,9 @@
         <!-- Makes sure there is a single statement on a line -->
         <module name="OneStatementPerLine"/>
 
+        <!-- Makes sure each variable declaration in a single statement on a line -->
+        <module name="MultipleVariableDeclarations"/>
+
         <!-- ***************************************************************** -->
 
         <!-- Enforces braces with do, else, for, if, while  -->
