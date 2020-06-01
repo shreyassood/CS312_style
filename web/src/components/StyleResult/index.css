@@ -6,3 +6,9 @@
 .line-no-error {
     display: block;
 }
+
+/* Make full width lines */
+.syntax-result code {
+    display: block;
+    width: fit-content;
+}

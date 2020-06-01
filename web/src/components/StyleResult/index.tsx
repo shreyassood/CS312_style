@@ -93,7 +93,7 @@ export default function StyleResult(props: Props) {
 
             <div className="row">
                 <SyntaxHighlighter
-                    className="col-md"
+                    className="col-md syntax-result"
                     language="java"
                     style={tomorrow}
                     wrapLines
