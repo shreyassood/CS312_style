@@ -7,8 +7,29 @@
     display: block;
 }
 
+.syntax-result {
+    /* fade for overflow scroll indication */
+    box-shadow: inset -5px 0px 15px 3px rgb(77, 77, 77);
+}
+
 /* Make full width lines */
 .syntax-result code {
     display: block;
     width: fit-content;
+}
+
+.floating-list-container {
+    padding-bottom: 1em;
+    padding-top: 1em;
+}
+
+/* Set panel header bg color to red */
+.floating-list-container .card-header {
+    background-color: darkred;
+    color: white;
+}
+
+.floating-list {
+    max-height: 20em;
+    overflow: auto;
 }
