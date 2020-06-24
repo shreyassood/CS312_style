@@ -5,6 +5,11 @@ import java from '../SyntaxHighlighter/languages/prism/java';
 import tomorrow from '../SyntaxHighlighter/styles/prism/tomorrow';
 
 import './index.css';
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
+import Badge from "react-bootstrap/Badge";
+import Row from "react-bootstrap/Row";
 
 // @ts-ignore
 SyntaxHighlighter.registerLanguage('java', java);
@@ -92,32 +97,72 @@ export default function StyleResult(props: Props) {
             </div>
 
             <div className="row">
-                <SyntaxHighlighter
-                    className="col-md"
-                    language="java"
-                    style={tomorrow}
-                    wrapLines
-                    renderer={null}
-                    astGenerator={null}
-                    lineProps={
-                        (lineNumber: number) => {
-                            if (errorMap.hasOwnProperty(lineNumber)) {
-                                return {
-                                    errors: errorMap[lineNumber],
-                                    className: LINE_ERROR_CLASS_NAME,
+                <Col md={9}>
+                    <SyntaxHighlighter
+                        className="syntax-result"
+                        language="java"
+                        style={tomorrow}
+                        wrapLines
+                        renderer={null}
+                        astGenerator={null}
+                        lineProps={
+                            (lineNumber: number) => {
+                                if (errorMap.hasOwnProperty(lineNumber)) {
+                                    return {
+                                        errors: errorMap[lineNumber],
+                                        className: LINE_ERROR_CLASS_NAME,
+                                    }
+                                } else {
+                                    return {
+                                        className: LINE_NO_ERROR_CLASS_NAME,
+                                    }
                                 }
-                            } else {
-                                return {
-                                    className: LINE_NO_ERROR_CLASS_NAME,
-                                }
-                            }
 
+                            }
                         }
-                    }
-                    showLineNumbers
-                >
-                    {props.fileResults.result.sourceCode}
-                </SyntaxHighlighter>
+                        showLineNumbers
+                    >
+                        {props.fileResults.result.sourceCode}
+                    </SyntaxHighlighter>
+                </Col>
+                <Col>
+                    <div className="floating-list-container sticky-top">
+                        <Card className="floating-list">
+                            <Card.Header>
+                                {props.fileResults.result.errors.length} Total Errors
+                            </Card.Header>
+                            <Container className="error-list">
+                                {Object.entries(errorMap)
+                                    .map(([lineNumber, errors]) => {
+                                    return (
+                                            <Row
+                                                as="a"
+                                                href
+                                                onClick={() => {
+                                                let el = document.getElementById("line-" + lineNumber);
+                                                if(el != null) {
+                                                    el.scrollIntoView();
+                                                }
+                                            }}>
+                                                <Col sm={4} className="floating-list-line-number">
+                                                    line {lineNumber} ({errors.length})
+                                                </Col>
+                                                <Col className="floating-list-details">
+                                                    {errors.map((error) => {
+                                                        return (
+                                                            <Row>
+                                                                {error.message}
+                                                            </Row>
+                                                        )
+                                                    })}
+                                                </Col>
+                                            </Row>
+                                    )
+                                })}
+                            </Container>
+                        </Card>
+                    </div>
+                </Col>
             </div>
 
         </div>

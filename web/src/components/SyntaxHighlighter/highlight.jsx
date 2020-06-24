@@ -13,6 +13,8 @@ function getAllLineNumbers({ lines, startingLineNumber, style }) {
       <span
         key={`line-${i}`}
         className="react-syntax-highlighter-line-number"
+        // line number to jump
+        id={`line-${i + 1}`}
         style={typeof style === 'function' ? style(number) : style}
       >
         {`${number}\n`}
