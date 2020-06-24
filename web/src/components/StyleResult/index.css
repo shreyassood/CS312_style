@@ -31,7 +31,6 @@
 
 .floating-list {
     max-height: 20em;
-    overflow: auto;
 }
 
 .floating-list .floating-list-line-number {
@@ -44,6 +43,7 @@
 
 .error-list {
     font-size: 0.7em;
+    overflow: auto;
 }
 
 /* padding between lines */
