@@ -33,3 +33,26 @@
     max-height: 20em;
     overflow: auto;
 }
+
+.floating-list .floating-list-line-number {
+    text-align: right;
+}
+
+.floating-list .floating-list-details {
+    text-align: left;
+}
+
+.error-list {
+    font-size: 0.7em;
+}
+
+/* padding between lines */
+.error-list a {
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    border-bottom: 1px solid lightgray;
+}
+
+.floating-list-line-number {
+    font-weight: bold;
+}

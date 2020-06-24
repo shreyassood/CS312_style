@@ -5,11 +5,11 @@ import java from '../SyntaxHighlighter/languages/prism/java';
 import tomorrow from '../SyntaxHighlighter/styles/prism/tomorrow';
 
 import './index.css';
+import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
-import ListGroup from "react-bootstrap/ListGroup";
-import ListGroupItem from "react-bootstrap/ListGroupItem";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
+import Row from "react-bootstrap/Row";
 
 // @ts-ignore
 SyntaxHighlighter.registerLanguage('java', java);
@@ -131,24 +131,35 @@ export default function StyleResult(props: Props) {
                             <Card.Header>
                                 {props.fileResults.result.errors.length} Total Errors
                             </Card.Header>
-                            <ListGroup variant="flush" className="error-list">
+                            <Container className="error-list">
                                 {Object.entries(errorMap)
                                     .map(([lineNumber, errors]) => {
                                     return (
-                                        <ListGroupItem
-                                            action
-                                            onClick={() => {
+                                            <Row
+                                                as="a"
+                                                href
+                                                onClick={() => {
                                                 let el = document.getElementById("line-" + lineNumber);
                                                 if(el != null) {
                                                     el.scrollIntoView();
                                                 }
-                                            }}
-                                        >
-                                            {lineNumber} <Badge variant="danger">{errors.length}</Badge>
-                                        </ListGroupItem>
+                                            }}>
+                                                <Col sm={4} className="floating-list-line-number">
+                                                    line {lineNumber} ({errors.length})
+                                                </Col>
+                                                <Col className="floating-list-details">
+                                                    {errors.map((error) => {
+                                                        return (
+                                                            <Row>
+                                                                {error.message}
+                                                            </Row>
+                                                        )
+                                                    })}
+                                                </Col>
+                                            </Row>
                                     )
                                 })}
-                            </ListGroup>
+                            </Container>
                         </Card>
                     </div>
                 </Col>
