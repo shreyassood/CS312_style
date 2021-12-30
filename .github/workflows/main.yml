@@ -19,13 +19,13 @@ jobs:
 
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2.4.0
 
     - name: Setup Node
       uses: actions/setup-node@v2.5.1
       
     - name: Setup Maven
-      uses: stCarolas/setup-maven@v1
+      uses: stCarolas/setup-maven@v4.2
       
     - name: Maven Build
       run: mvn clean install
