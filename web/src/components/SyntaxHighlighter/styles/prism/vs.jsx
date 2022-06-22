@@ -7,7 +7,7 @@ export default {
         "whiteSpace": "pre",
         "wordSpacing": "normal",
         "wordBreak": "normal",
-        "fontSize": "0.95em",
+        "fontSize": "0.95em", // details on issue are hard to locate for syntax checker, I wasn't sure if  this is the location?
         "lineHeight": "1.2em",
         "MozTabSize": "4",
         "OTabSize": "4",
